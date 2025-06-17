@@ -1,0 +1,74 @@
+.topbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+ border-bottom: 1px solid black;
+  flex-wrap: wrap;
+  
+}
+
+.tabs {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.tab-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #444;
+  font-weight: 500;
+  text-decoration: none;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+}
+
+.tab-link i {
+  font-size: 1.1rem;
+}
+
+.tab-link.active-tab {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+
+
+.timesheet-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  
+  flex-wrap: nowrap;
+  gap: 1.5rem;
+}
+
+
+.date-navigation,
+.summary-submit {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.date-range {
+  font-weight: 500;
+}
+
+.logged {
+  color: red;
+  font-weight: 600;
+}
+
+.submitted {
+ 
+  font-weight: 600;
+}

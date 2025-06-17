@@ -1,59 +1,56 @@
-<!-- <h2>Weekly Timesheet</h2>
-
-<div class="mb-3">
-  <label>Project Name:</label>
-  <input
-    type="text"
-    [(ngModel)]="projectName"
-    placeholder="Enter Project Name"
-    class="p-inputtext"
-  />
+<div class="topbar-container">
+  <!-- Tabs with Icons and Router Links -->
+  <div class="tabs">
+    <a routerLink="/timesheet" routerLinkActive="active-tab" class="tab-link">
+      <i class="pi pi-table"></i>
+      My Timesheet
+    </a>
+    <a routerLink="/submitted" routerLinkActive="active-tab" class="tab-link">
+      <i class="pi pi-check-square"></i>
+      Submitted Timesheet
+    </a>
+  </div>
+</div>
+  <div class="timesheet-toolbar">
+    <!-- View Options -->
+    <div class="view-toggle">
+  <p-buttonGroup>
+    <p-button label="Month" class="p-button-sm p-button-text"></p-button>
+    <p-button label="Week" class="p-button-sm p-button-text"></p-button>
+    <p-button label="Day" class="p-button-sm p-button-outlined"></p-button>
+  </p-buttonGroup>
 </div>
 
-<p-table [value]="tasks">
-  <ng-template pTemplate="header">
-    <tr>
-      <th>Description</th>
-      <th>Billable</th>
-      <th *ngFor="let day of days">{{ day | titlecase }}</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-task>
-    <tr>
-      <td><input type="text" [(ngModel)]="task.description" /></td>
-      <td>
-        <p-toggleButton
-          [(ngModel)]="task.isBillable"
-          onLabel="Yes"
-          offLabel="No"
-        ></p-toggleButton>
-      </td>
-      <td *ngFor="let day of days">
-        <p-inputNumber
-          [(ngModel)]="task[day]"z
-          [min]="0"
-          [max]="24"
-          inputStyle="width: 60px;"
-        ></p-inputNumber>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+    <!-- Date Navigation -->
+    <div class="date-navigation">
+      <button pButton icon="pi pi-angle-left" class="p-button-text p-button-sm"></button>
+      <span class="date-range">Jun 16, 2025 - Jun 22, 2025</span>
+      <p-calendar [(ngModel)]="selectedDate" showIcon class="p-inputtext-sm ml-2"></p-calendar>
+    </div>
 
-<button pButton label="Add Task" (click)="addTask()" class="mt-2"></button>
-<button
-  pButton
-  label="Submit Timesheet"
-  (click)="submitTimesheet()"
-  class="mt-2 p-button-success"
-></button> -->
-<div class="p-m-4">
-  <h2>Weekly Timesheet</h2>
-  <div class="p-inputgroup p-mb-3">
-    <span class="p-inputgroup-addon"><i class="pi pi-search"></i></span>
-    <input type="text" pInputText placeholder="Search tasks..." [(ngModel)]="globalFilter">
-  </div>
+    <!-- Summary + Submit -->
+    <div class="summary-submit">
+      <span class="logged">00:00 hrs</span>
+      <small>Logged Hours</small>
+      <span class="submitted ml-3">00:00 hrs</span>
+      <small>Submitted Hours</small>
+      <p-splitButton label="Submit" [model]="submitOptions" class="ml-3"
+        styleClass="p-button-sm p-button-primary"></p-splitButton>
+    </div>
+ 
 
+
+  <!-- <div class="p-m-4">
+<nav class="main-nav">
+  <a routerLink="/timesheet" routerLinkActive="active-link">
+    <i class="pi pi-clock"></i>
+    Timesheet
+  </a>
+  <a routerLink="/reports" routerLinkActive="active-link">
+    <i class="pi pi-chart-bar"></i>
+    Reports
+  </a>
+</nav>
   <p-table [value]="projects" dataKey="id" expandableRows>
     <ng-template pTemplate="header">
       <tr>
@@ -91,4 +88,4 @@
     <strong>Total Hours: {{ totalHours }}</strong>
     <button pButton label="Submit" class="p-ml-3" (click)="submit()"></button>
   </div>
-</div>
+</div> -->

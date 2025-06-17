@@ -6,8 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToggleButtonModule } from 'primeng/togglebutton';
-import { ButtonModule } from 'primeng/button';
 import { NgFor } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { CalendarModule } from 'primeng/calendar';
+import { ButtonGroupModule } from 'primeng/buttongroup';
+
+
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -17,11 +22,16 @@ const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     TableModule,
     InputTextModule,
     ToggleButtonModule,
-    ButtonModule,NgFor ],
+    ButtonModule,NgFor,SplitButtonModule ,CalendarModule,ButtonGroupModule],
  templateUrl: './timesheet.component.html',
   styleUrls: ['./timesheet.component.css']
 })
 export class TimesheetComponent implements OnInit {
+   selectedDate: Date = new Date();
+    submitOptions = [
+    { label: 'Save as Draft', icon: 'pi pi-save', command: () => {} },
+    { label: 'Submit Now', icon: 'pi pi-upload', command: () => {} }
+  ];
   projects: Project[] = [];
   days = DAYS;
   globalFilter = '';
