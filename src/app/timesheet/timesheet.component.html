@@ -1,4 +1,4 @@
-<h2>Weekly Timesheet</h2>
+<!-- <h2>Weekly Timesheet</h2>
 
 <div class="mb-3">
   <label>Project Name:</label>
@@ -30,7 +30,7 @@
       </td>
       <td *ngFor="let day of days">
         <p-inputNumber
-          [(ngModel)]="task[day]"
+          [(ngModel)]="task[day]"z
           [min]="0"
           [max]="24"
           inputStyle="width: 60px;"
@@ -46,4 +46,49 @@
   label="Submit Timesheet"
   (click)="submitTimesheet()"
   class="mt-2 p-button-success"
-></button>
+></button> -->
+<div class="p-m-4">
+  <h2>Weekly Timesheet</h2>
+  <div class="p-inputgroup p-mb-3">
+    <span class="p-inputgroup-addon"><i class="pi pi-search"></i></span>
+    <input type="text" pInputText placeholder="Search tasks..." [(ngModel)]="globalFilter">
+  </div>
+
+  <p-table [value]="projects" dataKey="id" expandableRows>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Project</th>
+        <th>Description</th>
+        <th>Billable</th>
+        <th *ngFor="let day of days">{{ day }}</th>
+        <th>Add Task</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-project>
+      <tr>
+        <td [attr.rowspan]="filterTasks(project.tasks).length + 1">{{ project.name }}</td>
+      </tr>
+      <ng-container *ngFor="let task of filterTasks(project.tasks)">
+        <tr>
+          <td>
+            <input pInputText [(ngModel)]="task.description" (ngModelChange)="save()" placeholder="Task description">
+          </td>
+          <td>
+            <p-toggleButton [(ngModel)]="task.billable" onLabel="Yes" offLabel="No" (onChange)="toggleBillable(task)"></p-toggleButton>
+          </td>
+          <td *ngFor="let day of days">
+            <input type="number" pInputText [(ngModel)]="task.hours[day]" min="0" (ngModelChange)="onHourChange()" style="width: 60px;">
+          </td>
+          <td>
+            <button pButton icon="pi pi-plus" (click)="addTask(project)" class="p-button-sm"></button>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-template>
+  </p-table>
+
+  <div class="p-mt-3">
+    <strong>Total Hours: {{ totalHours }}</strong>
+    <button pButton label="Submit" class="p-ml-3" (click)="submit()"></button>
+  </div>
+</div>

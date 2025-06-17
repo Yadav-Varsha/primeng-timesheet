@@ -1,65 +1,95 @@
-import { Component,inject } from '@angular/core';
-
-import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Component,OnInit} from '@angular/core';
+import { Project } from '../models/project.model';
+import { TaskEntry } from '../models/task-entry.model';
+import { TimesheetService } from '../service/timesheet.service';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { ButtonModule } from 'primeng/button';
+import { NgFor } from '@angular/common';
 
+const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 @Component({
   selector: 'app-timesheet',
-  imports: [ CommonModule,
-    FormsModule,
-    HttpClientModule,
+  imports: [FormsModule,
     TableModule,
-    InputNumberModule,
-    ButtonModule,
-    ToggleButtonModule],
-  templateUrl: './timesheet.component.html',
-  styleUrl: './timesheet.component.css'
+    InputTextModule,
+    ToggleButtonModule,
+    ButtonModule,NgFor ],
+ templateUrl: './timesheet.component.html',
+  styleUrls: ['./timesheet.component.css']
 })
-export class TimesheetComponent {
- private http = inject(HttpClient);
+export class TimesheetComponent implements OnInit {
+  projects: Project[] = [];
+  days = DAYS;
+  globalFilter = '';
+  totalHours = 0;
 
-  projectName = '';
-  tasks: any[] = [
-    this.createEmptyTask()
-  ];
+  constructor(private timesheetService: TimesheetService) {}
 
-  days: string[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+  ngOnInit() {
+    this.projects = this.timesheetService.getProjects();
+    if (this.projects.length === 0) {
+      // Seed with a sample project/task
+      this.projects = [{
+        id: 1,
+        name: 'Sample Project',
+        tasks: [{
+          id: 1,
+          description: 'Initial Task',
+          billable: true,
+          hours: { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 }
+        }]
+      }];
+      this.save();
+    }
+    this.calculateTotal();
+  }
 
-  createEmptyTask() {
-    return {
+  addTask(project: Project) {
+    const newTask: TaskEntry = {
+      id: Date.now(),
       description: '',
-      isBillable: false,
-      monday: 0,
-      tuesday: 0,
-      wednesday: 0,
-      thursday: 0,
-      friday: 0,
-      saturday: 0,
-      sunday: 0
+      billable: false,
+      hours: { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 }
     };
+    project.tasks.push(newTask);
+    this.save();
   }
 
-  addTask() {
-    this.tasks.push(this.createEmptyTask());
+  onHourChange() {
+    this.save();
+    this.calculateTotal();
   }
 
-  submitTimesheet() {
-    const project = {
-      name: this.projectName,
-      tasks: this.tasks
-    };
+  toggleBillable(task: TaskEntry) {
+    task.billable = !task.billable;
+    this.save();
+  }
 
-    this.http.post('http://localhost:27098/api/Projects', project)
-      .subscribe({
-        next: (res) => alert('Timesheet Submitted Successfully!'),
-        error: (err) => alert('Error: ' + err.error?.message || err.statusText)
-      });
+  calculateTotal() {
+    this.totalHours = this.projects
+      .flatMap(p => p.tasks)
+      .reduce((sum, t) => sum + this.days.reduce((dSum, d) => dSum + (+t.hours[d] || 0), 0), 0);
+  }
+
+  save() {
+    this.timesheetService.saveProjects(this.projects);
+  }
+
+  submit() {
+    alert('Timesheet submitted!\nTotal Hours: ' + this.totalHours);
+    // Optionally clear or lock the timesheet
+  }
+
+  filterTasks(tasks: TaskEntry[]): TaskEntry[] {
+    if (!this.globalFilter) return tasks;
+    const filter = this.globalFilter.toLowerCase();
+    return tasks.filter(t =>
+      t.description.toLowerCase().includes(filter)
+    );
   }
 }
                             

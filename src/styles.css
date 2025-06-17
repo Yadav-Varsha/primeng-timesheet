@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+.main-content {
+  margin-left: 220px;  /* Sidebar width */
+  margin-top: 56px;    /* Topbar height */
+  padding: 2rem;
+  min-height: calc(100vh - 56px);
+  background: #f4f6f8;
+  box-sizing: border-box;
+}
