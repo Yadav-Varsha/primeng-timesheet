@@ -1,53 +1,55 @@
-<div class="topbar-container">
-  <!-- Tabs with Icons and Router Links -->
-  <div class="tabs">
-    <a routerLink="/timesheet" routerLinkActive="active-tab" class="tab-link">
-      <i class="pi pi-table"></i>
-      My Timesheet
-    </a>
-    <a routerLink="/submitted" routerLinkActive="active-tab" class="tab-link">
-      <i class="pi pi-check-square"></i>
-      Submitted Timesheet
-    </a>
-  </div>
-</div>
-  <div class="timesheet-toolbar">
-    <!-- View Options -->
-    <!-- <div class="view-toggle">
+<!-- <div class="tabs">
+  <a routerLink="/timesheet" routerLinkActive="active-tab" class="tab-link">
+    <i class="pi pi-table"></i> My Timesheet
+  </a>
+  <a routerLink="/submitted" routerLinkActive="active-tab" class="tab-link">
+    <i class="pi pi-check-square"></i> Submitted Timesheet
+  </a>
+</div> -->
+<!-- <div class="timesheet-toolbar"> -->
+  <!-- View Options -->
+  <!-- <div class="view-toggle">
   <p-buttonGroup>
     <p-button label="Month" class="p-button-sm p-button-text"></p-button>
-    <p-button label="Week" class="p-button-sm p-button-text"></p-button>
-    <p-button label="Day" class="p-button-sm p-button-outlined"></p-button>
-  </p-buttonGroup>
+    <p-button label="Week" class="p-button-sm p-button-outlined"></p-button>
+  </p-buttonGroup>m p-button-text"></p-button>
+    <p-button label="Day" class="p-button-s
 </div> -->
-<div class="view-control">
+  <!-- <div class="view-control">
   <div class="view-tab">
     <button class="nav-btn"><i class="pi pi-calendar"> month</i></button>
     <button class="nav-btn"><i class="pi pi-calendar"> month</i></button>
     <button class="nav-btn"><i class="pi pi-calendar"> month</i></button>
   </div>
   </div>
-</div>
+</div> -->
 
-    <!-- Date Navigation -->
-    <div class="date-navigation">
-      <button pButton icon="pi pi-angle-left" class="p-button-text p-button-sm"></button>
-      <span class="date-range">Jun 16, 2025 - Jun 22, 2025</span>
-      <p-calendar [(ngModel)]="selectedDate" showIcon class="p-inputtext-sm ml-2"></p-calendar>
-    </div>
+  <!-- <div class="btn-group btn-group-sm" role="group">
+    <button type="button" class="btn btn-outline-secondary">Month</button>
+    <button type="button" class="btn btn-outline-danger active">Week</button>
+    <button type="button" class="btn btn-outline-secondary">Day</button>
+  </div>
 
-    <!-- Summary + Submit -->
-    <div class="summary-submit">
-      <span class="logged">00:00 hrs</span>
-      <small>Logged Hours</small>
-      <span class="submitted ml-3">00:00 hrs</span>
-      <small>Submitted Hours</small>
-      <p-splitButton label="Submit" [model]="submitOptions" class="ml-3"
-        styleClass="p-button-sm p-button-primary"></p-splitButton>
-    </div>
+  Date Navigation -->
+<!-- <div class="date-navigation">
+  <button pButton icon="pi pi-angle-left" class="p-button-text p-button-sm"></button>
+  <span class="date-range">Jun 16, 2025 - Jun 22, 2025</span>
  
+</div> -->
 
 
+  <!-- Summary + Submit -->
+  <!-- <div class="summary-submit">
+    <span class="logged">00:00 hrs</span>
+    <small>Logged Hours</small>
+    <span class="submitted ml-3">00:00 hrs</span>
+    <small>Submitted Hours</small>
+    <p-splitButton label="Submit" [model]="submitOptions" class="ml-3"
+      styleClass="p-button-sm p-button-primary"></p-splitButton>
+  </div>
+
+
+</div> -->
   <!-- <div class="p-m-4">
 <nav class="main-nav">
   <a routerLink="/timesheet" routerLinkActive="active-link">
@@ -97,3 +99,100 @@
     <button pButton label="Submit" class="p-ml-3" (click)="submit()"></button>
   </div>
 </div> -->
+ 
+<div class="tab-navigation">
+    <div class="tab active">
+      <i class="pi pi-calendar"></i>
+      <span>My Timesheet</span>
+    </div>
+    <div class="tab">
+      <i class="pi pi-check-square"></i>
+      <span>Submitted Timesheet</span>
+    </div>
+  </div>
+ 
+
+  <div class="view-controls">
+    <div class="view-tabs">
+      <p-button class="view-tab">Month</p-button>
+      <p-button class="view-tab active">Week</p-button>
+      <p-button class="view-tab ">Day</p-button>
+    </div>
+    <div class="date-navigation">
+      <button class="nav-btn"><i class="pi pi-chevron-left"></i></button>
+      <button class="nav-btn"><i class="pi pi-chevron-right"></i></button>
+      <button class="calendar-btn"><i class="pi pi-calendar-times"></i></button>
+    </div>
+     <div class="hour-summary">
+      <div class="logged-hours">
+        <span class="hour-value">00:00 hrs</span>
+        <span class="hour-label">Logged Hours</span>
+      </div>
+      <div class="submitted-hours">
+        <span class="hour-value">00:00 hrs</span>
+        <span class="hour-label">Submitted Hours</span>
+      </div>
+      <div class="action-buttons">
+        <p-button class="project-btn" icon="pi pi-plus" label="Project"/>
+        <p-button label="Submit" class="submit-btn" [raised]="true" severity="info"/>
+        <p-button class="options-btn"><i class="pi pi-chevron-down"></i></p-button >
+      </div>
+    </div>      
+  </div>  
+ 
+
+  
+  
+<p-table [value]="projects" dataKey="id" expandableRows>
+  <!-- Header -->
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 3rem;"></th> <!-- space for auto toggler icon -->
+      <th>Project / Task</th>
+      <th>Description</th>
+      <th>Billable</th>
+      <th *ngFor="let day of weekDays">{{ day }}</th>
+    </tr>
+  </ng-template>
+
+  <!-- Main Project Row -->
+  <ng-template pTemplate="body" let-project>
+    <tr>
+      <!-- ✅ leave this cell empty, PrimeNG will render the toggle icon -->
+      <td></td>
+      <td>{{ project.name }}</td>
+      <td colspan="100%"></td>
+    </tr>
+  </ng-template>
+
+  <!-- Expanded Row for Tasks -->
+  <ng-template pTemplate="rowexpansion" let-project>
+    <tr *ngFor="let task of project.tasks">
+      <td></td>
+      <td>→ Task</td>
+      <td>
+        <input pInputText [(ngModel)]="task.description" (ngModelChange)="save()" />
+      </td>
+      <td>
+        <p-inputSwitch [(ngModel)]="task.billable" (ngModelChange)="save()"></p-inputSwitch>
+      </td>
+      <td *ngFor="let day of weekDays">
+        <p-inputNumber [(ngModel)]="task.hours[day]" (ngModelChange)="save()" inputStyle="width: 60px"></p-inputNumber>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="10">
+        <button pButton label="+ Add Task" (click)="addTask(project)" class="p-button-sm p-button-text"></button>
+      </td>
+    </tr>
+  </ng-template>
+
+  <!-- Footer Total -->
+  <ng-template pTemplate="footer">
+    <tr>
+      <td colspan="4" class="text-end fw-bold">Total</td>
+      <td *ngFor="let day of weekDays" class="fw-bold">{{ getTotal(day) }}</td>
+    </tr>
+  </ng-template>
+</p-table>

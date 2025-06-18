@@ -1,4 +1,4 @@
-import { Component,OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Project } from '../models/project.model';
 import { TaskEntry } from '../models/task-entry.model';
 import { TimesheetService } from '../service/timesheet.service';
@@ -12,9 +12,14 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { CalendarModule } from 'primeng/calendar';
 import { ButtonGroupModule } from 'primeng/buttongroup';
 
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 
-const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+
+
+
 
 @Component({
   selector: 'app-timesheet',
@@ -22,84 +27,44 @@ const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     TableModule,
     InputTextModule,
     ToggleButtonModule,
-    ButtonModule,NgFor,SplitButtonModule ,CalendarModule,ButtonGroupModule],
- templateUrl: './timesheet.component.html',
+    ButtonModule, SplitButtonModule, CalendarModule, ButtonGroupModule, ButtonModule, InputNumberModule, InputSwitchModule, NgFor, TableModule],
+  templateUrl: './timesheet.component.html',
   styleUrls: ['./timesheet.component.css']
 })
 export class TimesheetComponent implements OnInit {
-   selectedDate: Date = new Date();
-    submitOptions = [
-    { label: 'Save as Draft', icon: 'pi pi-save', command: () => {} },
-    { label: 'Submit Now', icon: 'pi pi-upload', command: () => {} }
-  ];
   projects: Project[] = [];
-  days = DAYS;
-  globalFilter = '';
-  totalHours = 0;
+  weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-  constructor(private timesheetService: TimesheetService) {}
+  constructor(private timesheetService: TimesheetService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.projects = this.timesheetService.getProjects();
-    if (this.projects.length === 0) {
-      // Seed with a sample project/task
-      this.projects = [{
-        id: 1,
-        name: 'Sample Project',
-        tasks: [{
-          id: 1,
-          description: 'Initial Task',
-          billable: true,
-          hours: { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 }
-        }]
-      }];
-      this.save();
-    }
-    this.calculateTotal();
   }
 
-  addTask(project: Project) {
-    const newTask: TaskEntry = {
-      id: Date.now(),
-      description: '',
-      billable: false,
-      hours: { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 }
-    };
-    project.tasks.push(newTask);
-    this.save();
+  addTask(project: Project): void {
+  const newTask: TaskEntry = {
+    id: Date.now(), // or project.tasks.length + 1
+    description: '',
+    billable: false,
+    hours: this.initializeHours()
+  };
+  project.tasks.push(newTask);
+  this.save();
+}
+
+
+  initializeHours(): { [key: string]: number } {
+    const hours: { [key: string]: number } = {};
+    this.weekDays.forEach(day => (hours[day] = 0));
+    return hours;
   }
 
-  onHourChange() {
-    this.save();
-    this.calculateTotal();
+  getTotal(day: string): number {
+    return this.projects.reduce((sum, p) =>
+      sum + p.tasks.reduce((s, t) => s + (t.hours[day] || 0), 0), 0);
   }
 
-  toggleBillable(task: TaskEntry) {
-    task.billable = !task.billable;
-    this.save();
-  }
-
-  calculateTotal() {
-    this.totalHours = this.projects
-      .flatMap(p => p.tasks)
-      .reduce((sum, t) => sum + this.days.reduce((dSum, d) => dSum + (+t.hours[d] || 0), 0), 0);
-  }
-
-  save() {
+  save(): void {
     this.timesheetService.saveProjects(this.projects);
   }
-
-  submit() {
-    alert('Timesheet submitted!\nTotal Hours: ' + this.totalHours);
-    // Optionally clear or lock the timesheet
-  }
-
-  filterTasks(tasks: TaskEntry[]): TaskEntry[] {
-    if (!this.globalFilter) return tasks;
-    const filter = this.globalFilter.toLowerCase();
-    return tasks.filter(t =>
-      t.description.toLowerCase().includes(filter)
-    );
-  }
 }
-                            

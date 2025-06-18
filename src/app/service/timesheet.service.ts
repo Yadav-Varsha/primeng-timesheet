@@ -7,14 +7,14 @@ import { Project } from '../models/project.model';
 export class TimesheetService {
 
   constructor() { }
-    private storageKey = 'timesheetData';
+    private storageKey = 'weeklyTimesheet';
 
   getProjects(): Project[] {
     const data = localStorage.getItem(this.storageKey);
     return data ? JSON.parse(data) : [];
   }
 
-  saveProjects(projects: Project[]) {
+  saveProjects(projects: Project[]): void {
     localStorage.setItem(this.storageKey, JSON.stringify(projects));
   }
 }

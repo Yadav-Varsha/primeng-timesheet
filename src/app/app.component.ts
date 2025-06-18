@@ -7,7 +7,7 @@ import { TimesheetComponent } from './timesheet/timesheet.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ButtonDemoComponent, TopbarComponent, SidebarComponent, TimesheetComponent],
+  imports: [RouterOutlet, TopbarComponent, SidebarComponent, TimesheetComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

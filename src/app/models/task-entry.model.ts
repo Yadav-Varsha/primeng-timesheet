@@ -1,6 +1,7 @@
+
 export interface TaskEntry {
-  id: number;
+  id: number; // this is required
   description: string;
   billable: boolean;
-  hours: { [day: string]: number }; // e.g., { Mon: 2, Tue: 4, ... }
+  hours: { [day: string]: number };
 }
