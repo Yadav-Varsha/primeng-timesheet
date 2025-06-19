@@ -14,6 +14,7 @@ import { ButtonGroupModule } from 'primeng/buttongroup';
 
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { ProjectModalService } from '../service/project-modal.service';
 
 
 
@@ -31,40 +32,42 @@ import { InputSwitchModule } from 'primeng/inputswitch';
   templateUrl: './timesheet.component.html',
   styleUrls: ['./timesheet.component.css']
 })
-export class TimesheetComponent implements OnInit {
-  projects: Project[] = [];
-  weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+export class TimesheetComponent {
+   constructor(public projectModalService: ProjectModalService) {}
+   
+//   projects: Project[] = [];
+//   weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-  constructor(private timesheetService: TimesheetService) { }
+//   constructor(private timesheetService: TimesheetService) { }
 
-  ngOnInit(): void {
-    this.projects = this.timesheetService.getProjects();
-  }
+//   ngOnInit(): void {
+//     this.projects = this.timesheetService.getProjects();
+//   }
 
-  addTask(project: Project): void {
-  const newTask: TaskEntry = {
-    id: Date.now(), // or project.tasks.length + 1
-    description: '',
-    billable: false,
-    hours: this.initializeHours()
-  };
-  project.tasks.push(newTask);
-  this.save();
-}
+//   addTask(project: Project): void {
+//   const newTask: TaskEntry = {
+//     id: Date.now(), // or project.tasks.length + 1
+//     description: '',
+//     billable: false,
+//     hours: this.initializeHours()
+//   };
+//   project.tasks.push(newTask);
+//   this.save();
+// }
 
 
-  initializeHours(): { [key: string]: number } {
-    const hours: { [key: string]: number } = {};
-    this.weekDays.forEach(day => (hours[day] = 0));
-    return hours;
-  }
+//   initializeHours(): { [key: string]: number } {
+//     const hours: { [key: string]: number } = {};
+//     this.weekDays.forEach(day => (hours[day] = 0));
+//     return hours;
+//   }
 
-  getTotal(day: string): number {
-    return this.projects.reduce((sum, p) =>
-      sum + p.tasks.reduce((s, t) => s + (t.hours[day] || 0), 0), 0);
-  }
+//   getTotal(day: string): number {
+//     return this.projects.reduce((sum, p) =>
+//       sum + p.tasks.reduce((s, t) => s + (t.hours[day] || 0), 0), 0);
+//   }
 
-  save(): void {
-    this.timesheetService.saveProjects(this.projects);
-  }
+//   save(): void {
+//     this.timesheetService.saveProjects(this.projects);
+//   }
 }

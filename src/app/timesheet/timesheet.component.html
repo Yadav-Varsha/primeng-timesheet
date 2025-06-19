@@ -133,7 +133,7 @@
         <span class="hour-label">Submitted Hours</span>
       </div>
       <div class="action-buttons">
-        <p-button class="project-btn" icon="pi pi-plus" label="Project"/>
+        <p-button class="project-btn" icon="pi pi-plus" label="Project" (click)="openModal()"/>
         <p-button label="Submit" class="submit-btn" [raised]="true" severity="info"/>
         <p-button class="options-btn"><i class="pi pi-chevron-down"></i></p-button >
       </div>
@@ -142,31 +142,31 @@
  
 
   
-  
-<p-table [value]="projects" dataKey="id" expandableRows>
+<!--   
+<p-table [value]="projects" dataKey="id" expandableRows> -->
   <!-- Header -->
-  <ng-template pTemplate="header">
+  <!-- <ng-template pTemplate="header">
     <tr>
       <th style="width: 3rem;"></th> <!-- space for auto toggler icon -->
-      <th>Project / Task</th>
+      <!-- <th>Project / Task</th>
       <th>Description</th>
       <th>Billable</th>
       <th *ngFor="let day of weekDays">{{ day }}</th>
     </tr>
-  </ng-template>
+  </ng-template> --> -->
 
   <!-- Main Project Row -->
-  <ng-template pTemplate="body" let-project>
+  <!-- <ng-template pTemplate="body" let-project>
     <tr>
       <!-- ✅ leave this cell empty, PrimeNG will render the toggle icon -->
-      <td></td>
+      <!-- <td></td>
       <td>{{ project.name }}</td>
       <td colspan="100%"></td>
     </tr>
-  </ng-template>
+  </ng-template>  -->
 
   <!-- Expanded Row for Tasks -->
-  <ng-template pTemplate="rowexpansion" let-project>
+  <!-- <ng-template pTemplate="rowexpansion" let-project>
     <tr *ngFor="let task of project.tasks">
       <td></td>
       <td>→ Task</td>
@@ -179,20 +179,30 @@
       <td *ngFor="let day of weekDays">
         <p-inputNumber [(ngModel)]="task.hours[day]" (ngModelChange)="save()" inputStyle="width: 60px"></p-inputNumber>
       </td>
-    </tr>
+    </tr> -->
 
-    <tr>
+    <!-- <tr>
       <td colspan="10">
         <button pButton label="+ Add Task" (click)="addTask(project)" class="p-button-sm p-button-text"></button>
       </td>
-    </tr>
+    </tr> -->
+    <!-- <tr>
+  <td colspan="10">
+    <button
+      pButton
+      class="p-button-sm p-button-text"
+      (click)="addTask(project)">
+      + Add Task
+    </button>
+  </td>
+</tr>
   </ng-template>
 
   <!-- Footer Total -->
-  <ng-template pTemplate="footer">
+  <!-- <ng-template pTemplate="footer">
     <tr>
       <td colspan="4" class="text-end fw-bold">Total</td>
       <td *ngFor="let day of weekDays" class="fw-bold">{{ getTotal(day) }}</td>
     </tr>
   </ng-template>
-</p-table>
+</p-table>  -->

@@ -1,0 +1,48 @@
+<!-- 🔘 Trigger Button -->
+<button class="btn-create" (click)="openModal()">Create Project</button>
+
+<!-- ✅ Modal Backdrop -->
+<div class="modal-backdrop" *ngIf="showModal">
+  <div class="modal-box">
+    <!-- 🔲 Header -->
+    <div class="modal-header">
+      <h2>New Project</h2>
+      <button class="close-btn" (click)="closeModal()">×</button>
+    </div>
+
+    <!-- 🧾 Form Body -->
+    <div class="modal-body">
+      <label>Project Name *</label>
+      <input type="text" [(ngModel)]="newProject.name" required />
+
+      <label>Client Name *</label>
+      <input type="text" [(ngModel)]="newProject.client" required />
+
+      <label>Project Type</label>
+      <select [(ngModel)]="newProject.type">
+        <option disabled selected value="">Select Type</option>
+        <option>Internal</option>
+        <option>External</option>
+      </select>
+
+      <label>Start Date</label>
+      <input type="date" [(ngModel)]="newProject.startDate" />
+
+      <label>End Date</label>
+      <input type="date" [(ngModel)]="newProject.endDate" />
+
+      <label>Description</label>
+      <textarea rows="3" [(ngModel)]="newProject.description" placeholder="Add Project Description"></textarea>
+
+      <label>Comment</label>
+      <textarea rows="2" [(ngModel)]="newProject.comment" placeholder="Add comment (if any)"></textarea>
+    </div>
+
+    <!-- ✅ Footer -->
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="closeModal()">Cancel</button>
+      <button class="btn-save" (click)="saveProject()">Save</button>
+    </div>
+  </div>
+</div>
+
