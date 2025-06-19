@@ -9,9 +9,8 @@ import { Project } from '../models/project.model';
   templateUrl: './project-modal.component.html',
   styleUrl: './project-modal.component.css'
 })
-export class ProjectModalComponent implements OnInit {
- showModal = false;
-  projects: Project[] = [];
+export class ProjectModalComponent  {
+  constructor(public projectModalService: ProjectModalService) {}
 
   newProject = {
     name: '',
@@ -23,29 +22,47 @@ export class ProjectModalComponent implements OnInit {
     comment: ''
   };
 
-  constructor(private projectModalService: ProjectModalService) {}
+  // saveProject() {
+  //   if (!this.newProject.name || !this.newProject.client) {
+  //     alert('Please enter project name and client');
+  //     return;
+  //   }
 
-  ngOnInit(): void {
-    this.projects = this.projectModalService.getProjects();
-  }
+  //   const projects = JSON.parse(localStorage.getItem('projects') || '[]');
+  //   projects.push({
+  //     ...this.newProject,
+  //     id: Date.now(),
+  //     tasks: []
+  //   });
 
-  openModal() {
-    this.showModal = true;
-  }
+  //   localStorage.setItem('projects', JSON.stringify(projects));
 
-  closeModal() {
-    this.showModal = false;
-    this.resetForm();
-  }
-
+  //   this.projectModalService.close(); // close the modal
+  //   this.resetForm();                 // reset fields
+  // }
   saveProject() {
-    if (!this.newProject.name || !this.newProject.client) {
-      alert('Project Name and Client are required');
-      return;
-    }
+  if (!this.newProject.name || !this.newProject.client) {
+    alert('Project Name and Client are required');
+    return;
+  }
 
-    this.projects = this.projectModalService.createProject(this.newProject);
-    this.closeModal();
+  const existing = JSON.parse(localStorage.getItem('projects') || '[]');
+
+  const newEntry = {
+    ...this.newProject,
+    id: Date.now(), // optional
+    tasks: []       // optional if you'll add tasks later
+  };
+
+  existing.push(newEntry);
+  localStorage.setItem('projects', JSON.stringify(existing));
+
+  this.close();     // ✅ Close the modal
+  this.resetForm(); // ✅ Reset form fields
+}
+
+  close() {
+    this.projectModalService.close();
   }
 
   resetForm() {
@@ -59,6 +76,5 @@ export class ProjectModalComponent implements OnInit {
       comment: ''
     };
   }
- 
 }
 

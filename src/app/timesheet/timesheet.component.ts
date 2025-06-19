@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Project } from '../models/project.model';
 import { TaskEntry } from '../models/task-entry.model';
 import { TimesheetService } from '../service/timesheet.service';
 import { FormsModule } from '@angular/forms';
-import { TableModule } from 'primeng/table';
+
 import { InputTextModule } from 'primeng/inputtext';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { NgFor } from '@angular/common';
@@ -11,16 +11,11 @@ import { ButtonModule } from 'primeng/button';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { CalendarModule } from 'primeng/calendar';
 import { ButtonGroupModule } from 'primeng/buttongroup';
-
+import { TableModule } from 'primeng/table';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ProjectModalService } from '../service/project-modal.service';
-
-
-
-
-
-
+import { ProjectModalComponent } from '../project-modal/project-modal.component';
 
 @Component({
   selector: 'app-timesheet',
@@ -28,12 +23,16 @@ import { ProjectModalService } from '../service/project-modal.service';
     TableModule,
     InputTextModule,
     ToggleButtonModule,
-    ButtonModule, SplitButtonModule, CalendarModule, ButtonGroupModule, ButtonModule, InputNumberModule, InputSwitchModule, NgFor, TableModule],
+    ButtonModule, SplitButtonModule, CalendarModule, ButtonGroupModule, ButtonModule, InputNumberModule, InputSwitchModule,  TableModule,NgFor],
   templateUrl: './timesheet.component.html',
   styleUrls: ['./timesheet.component.css']
 })
 export class TimesheetComponent {
-   constructor(public projectModalService: ProjectModalService) {}
+  constructor(public projectModalService: ProjectModalService) {}
+
+  openModal() {
+    this.projectModalService.open();
+  }
    
 //   projects: Project[] = [];
 //   weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -70,4 +69,37 @@ export class TimesheetComponent {
 //   save(): void {
 //     this.timesheetService.saveProjects(this.projects);
 //   }
+  projects = [
+    {
+      id: 1,
+      name: 'Internship Feb...',
+      tasks: [
+        {
+          id: 1,
+          name: 'Task 1',
+          description: 'Initial setup',
+          billable: true,
+          hours: { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 },
+          status: 'Open'
+        }
+      ]
+    }
+  ];
+
+  days = [
+    { label: 'Mon', date: 'Jun 16' },
+    { label: 'Tue', date: 'Jun 17' },
+    { label: 'Wed', date: 'Jun 18' },
+    { label: 'Thu', date: 'Jun 19' },
+    { label: 'Fri', date: 'Jun 20' },
+    { label: 'Sat', date: 'Jun 21' },
+    { label: 'Sun', date: 'Jun 22' }
+  ];
+
+  expandedRows: { [key: string]: boolean } = {};
+
+  addTask(project: any) {
+    // Add your logic to open a modal or add a task
+    alert('Add Task for ' + project.name);
+  }
 }
