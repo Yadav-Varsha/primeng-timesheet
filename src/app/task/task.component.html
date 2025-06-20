@@ -1,0 +1,99 @@
+<!-- <div class="modal-backdrop" *ngIf="taskService.show">
+  <div class="modal-panel">
+    <div class="modal-header">
+      <h2>New Task</h2>
+      <button class="close-btn" (click)="close()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Project Name (readonly) -->
+      <!-- <label>Project *</label>
+      <input type="text" [value]="projectName" disabled /> -->
+
+      <!-- Task Name -->
+      <!-- <label>Task Name *</label>
+      <input type="text" [(ngModel)]="newTask.name" placeholder="Enter Task Name" /> -->
+
+      <!-- Description -->
+      <!-- <label>Description</label>
+      <textarea rows="2" [(ngModel)]="newTask.description" placeholder="Enter description"></textarea> -->
+
+      <!-- Status Dropdown -->
+      <!-- <label>Status *</label>
+      <select [(ngModel)]="newTask.status">
+        <option value="" disabled selected>Select Status</option>
+        <option>Not Started</option>
+        <option>In Progress</option>
+        <option>Completed</option>
+      </select> -->
+
+      <!-- Billability Dropdown -->
+      <!-- <label>Billability *</label>
+      <select [(ngModel)]="newTask.billable">
+        <option value="" disabled selected>Select Billability</option>
+        <option value="true">Billable</option>
+        <option value="false">Non-Billable</option>
+      </select> -->
+
+      <!-- Comment -->
+      <!-- <label>Comment</label>
+      <textarea rows="2" [(ngModel)]="newTask.comment" placeholder="Add comment (if any)"></textarea>
+    </div> -->
+
+    <!-- <div class="modal-footer">
+      <button class="btn-cancel" (click)="close()">Cancel</button>
+      <button class="btn-save" (click)="saveTask()">Save</button>
+    </div>
+  </div>
+</div> --> 
+
+
+<div class="modal-backdrop" *ngIf="taskService.show">
+  <div class="modal-panel-right"> <!-- Slide-in panel -->
+    <div class="modal-header">
+      <h2>New Task</h2>
+      <button class="close-btn" (click)="close()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <label>Project Name *</label>
+      <input type="text" [value]="projectName" disabled />
+
+      <label>Task Name *</label>
+      <input type="text" [(ngModel)]="newTask.name" placeholder="Enter task name" />
+
+      <label>Task Category</label>
+      <select [(ngModel)]="newTask.category">
+        <option value="">Select Task Category</option>
+        <option>Design</option>
+        <option>Development</option>
+        <option>Testing</option>
+      </select>
+
+      <label>Billability (Jun 20) *</label>
+      <select [(ngModel)]="newTask.billable">
+        <option value="true">Billable</option>
+        <option value="false">Non-Billable</option>
+      </select>
+
+      <label>Task Status *</label>
+      <select [(ngModel)]="newTask.status">
+        <option value="">Select Status</option>
+        <option>Not Started</option>
+        <option>In Progress</option>
+        <option>Completed</option>
+      </select>
+
+      <label>Description (Jun 20) *</label>
+      <textarea rows="2" [(ngModel)]="newTask.description" placeholder="Add Task Description"></textarea>
+
+      <label>Comment</label>
+      <textarea rows="2" [(ngModel)]="newTask.comment" placeholder="Add comment (if any)"></textarea>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="close()">Cancel</button>
+      <button class="btn-save" (click)="saveTask()">Save</button>
+    </div>
+  </div>
+</div>

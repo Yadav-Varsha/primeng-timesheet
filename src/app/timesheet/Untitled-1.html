@@ -1,0 +1,166 @@
+  <div class="view-controls">
+    <div class="view-tabs">
+      <p-button class="view-tab">Month</p-button>
+      <p-button class="view-tab active">Week</p-button>
+      <p-button class="view-tab ">Day</p-button>
+    </div>
+    <div class="date-navigation">
+      <button class="nav-btn"><i class="pi pi-chevron-left"></i></button>
+      <button class="nav-btn"><i class="pi pi-chevron-right"></i></button>
+      <button class="calendar-btn"><i class="pi pi-calendar-times"></i></button>
+    </div>
+     <div class="hour-summary">
+      <div class="logged-hours">
+        <span class="hour-value">00:00 hrs</span>
+        <span class="hour-label">Logged Hours</span>
+      </div>
+      <div class="submitted-hours">
+        <span class="hour-value">00:00 hrs</span>
+        <span class="hour-label">Submitted Hours</span>
+      </div>
+      <div class="action-buttons">
+        <p-button class="project-btn" icon="pi pi-plus" label="Project"(click)="openProjectModal()"/>
+        <p-button label="Submit" class="submit-btn" [raised]="true" severity="info"/>
+        <p-button class="options-btn"><i class="pi pi-chevron-down"></i></p-button >
+      </div>
+    </div>      
+  </div>  
+ 
+.view-controls {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  justify-content: space-between;
+  background-color: white;
+  margin-top: 4px;
+ 
+  /* border-bottom: 2px solid #e0e0e0; */
+}
+ 
+ 
+.date-navigation {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+ 
+.date-range {
+  font-weight: 500;
+}
+ 
+ 
+.nav-btn, .calendar-btn {
+  border: 1px solid #dee2e6;
+  background: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+ 
+.hour-summary {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+ 
+.logged-hours {
+  display: flex;
+  flex-direction: column;
+  border-left: 3px solid #dc3545;
+  padding-left: 10px;
+}
+ 
+.submitted-hours {
+  display: flex;
+  flex-direction: column;
+  border-left: 3px solid #198754;
+  padding-left: 10px;
+}
+ 
+.hour-value {
+  font-weight: 500;
+}
+ 
+.hour-label {
+  font-size: 12px;
+  color: #6c757d;
+}
+ 
+.submit-btn {
+  padding: 6px 16px;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+ 
+.project-btn {
+  padding: 6px 16px;
+  background-color: white;
+  color: #0d6efd;
+  border: 1px solid #0d6efd;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+ 
+.project-btn:hover {
+  background-color: #f0f7ff;
+}
+.options-btn {
+  padding: 6px 12px;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+}
+ 
+<div class="tab-navigation">
+    <div class="tab active">
+      <i class="pi pi-calendar"></i>
+      <span>My Timesheet</span>
+    </div>
+    <div class="tab">
+      <i class="pi pi-check-square"></i>
+      <span>Submitted Timesheet</span>
+    </div>
+  </div>
+ 
+.tab-navigation {
+  display: flex;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: white;
+}
+ 
+.tab {
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #6c757d;
+}
+ 
+.tab.active {
+  color: #0d6efd;
+  border-bottom: 2px solid #0d6efd;
+  font-weight: 500;
+}
+ 
+.tab i {
+  font-size: 18px;
+}
+ 

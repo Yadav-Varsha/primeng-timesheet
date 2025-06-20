@@ -141,127 +141,130 @@
   </div>  
  
 
-   
+   <p-table
+  [value]="projects"
+  dataKey="name"
+  rowGroupMode="subheader"
+  groupRowsBy="name"
+  sortField="name"
+  sortMode="single"
  
-<!-- <p-table [value]="projects" dataKey="id" expandableRows> 
- 
-  <ng-template pTemplate="header">
+>
+  <!-- HEADER -->
+  <ng-template #header>
     <tr>
-      <th style="width: 3rem;"></th>  
-      <th>Project / Task</th>
-      <th>Description</th>
-      <th>Billable</th>
-      <th *ngFor="let day of weekDays">{{ day }}</th>
+      <th style="width: 20%">Projects / Tasks</th>
+      <th style="width: 20%">Description <br />(Jun 20)</th>
+      <th style="width: 10%">Billability <br />(Jun 20)</th>
+      <th>Mon <br />Jun 16</th>
+      <th>Tue <br />Jun 17</th>
+      <th>Wed <br />Jun 18</th>
+      <th>Thu <br />Jun 19</th>
+      <th>Fri <br />Jun 20</th>
+      <th>Sat <br />Jun 21</th>
+      <th>Sun <br />Jun 22</th>
     </tr>
-  </ng-template>  
+  </ng-template>
 
- 
-  <ng-template pTemplate="body" let-project>
+  <!-- GROUP HEADER: Project Row With + Task and Time Columns -->
+  <ng-template #groupheader let-project let-expanded="expanded">
     <tr>
-      ✅ leave this cell empty, PrimeNG will render the toggle icon
-     <td></td>
-      <td>{{ project.name }}</td>
-      <td colspan="100%"></td>
-    </tr>
-  </ng-template>  
+      <!-- Main Project Cell -->
+      <td class="align-middle">
+        <div class="flex items-center">
+          <button
+            type="button"
+            pButton
+            pRipple
+            [pRowToggler]="project"
+            text
+            rounded
+            plain
+            class="mr-2"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+          ></button>
 
- 
-  <ng-template pTemplate="rowexpansion" let-project>
-    <tr *ngFor="let task of project.tasks">
+          <!-- <img
+            src="https://primefaces.org/cdn/primeng/images/demo/avatar/avatar1.png"
+            width="24"
+            height="24"
+            class="mr-2"
+          /> -->
+
+           <img src="assets/project.png" alt="project" class="project-img"  width="24"
+            height="24"
+            class="mr-2" />
+          <span class="font-bold mr-3">{{ project.name }}</span>
+
+          <!-- '+ Task' beside project name (only before expand) -->
+          <a *ngIf="!expanded" href="#"  (click)="openTask(project)">+ Task</a>
+        </div>
+      </td>
+
+      <!-- Placeholder for description -->
       <td></td>
-      <td>→ Task</td>
-      <td>
-        <input pInputText [(ngModel)]="task.description" (ngModelChange)="save()" />
-      </td>
-      <td>
-        <p-inputSwitch [(ngModel)]="task.billable" (ngModelChange)="save()"></p-inputSwitch>
-      </td>
-      <td *ngFor="let day of weekDays">
-        <p-inputNumber [(ngModel)]="task.hours[day]" (ngModelChange)="save()" inputStyle="width: 60px"></p-inputNumber>
-      </td>
-    </tr>
+      <!-- Placeholder for billable -->
+      <td></td>
 
-     <tr>
+      <!-- Hours columns: shown only when not expanded -->
+<!-- Hours columns: visible only when not expanded -->
+<ng-container *ngIf="!expanded">
+  <td>00:00</td>
+  <td>00:00</td>
+  <td>00:00</td>
+  <td>00:00</td>
+  <td>00:00</td>
+  <td>00:00</td>
+  <td>00:00</td>
+</ng-container>
+
+<!-- Empty tds to preserve row structure when expanded -->
+<ng-container *ngIf="expanded">
+  <td colspan="7"></td>
+</ng-container>
+
+
+    </tr>
+  </ng-template>
+
+  <!-- EXPANDED ROW -->
+  <ng-template #expandedrow let-project>
+    <!-- Render each task -->
+    <ng-container *ngFor="let task of project.tasks">
+      <tr>
+        <td>{{ task.name }}</td>
+        <td>{{ task.description || '—' }}</td>
+        <td>
+          <p-checkbox [(ngModel)]="task.billable" binary="true"></p-checkbox>
+        </td>
+        <td>{{ task.hours['Mon'] || '00:00' }}</td>
+        <td>{{ task.hours['Tue'] || '00:00' }}</td>
+        <td>{{ task.hours['Wed'] || '00:00' }}</td>
+        <td>{{ task.hours['Thu'] || '00:00' }}</td>
+        <td>{{ task.hours['Fri'] || '00:00' }}</td>
+        <td>{{ task.hours['Sat'] || '00:00' }}</td>
+        <td>{{ task.hours['Sun'] || '00:00' }}</td>
+      </tr>
+    </ng-container>
+
+    <!-- Add Task Row -->
+    <tr>
       <td colspan="10">
-        <button pButton label="+ Add Task" (click)="addTask(project)" class="p-button-sm p-button-text"></button>
+        <a href="#" (click)="addTask(project)">+ Task</a>
       </td>
     </tr>
-     <tr> 
-  <td colspan="10">
-    <button
-      pButton
-      class="p-button-sm p-button-text"
-      (click)="addTask(project)">
-      + Add Task
-    </button>
-  </td>
-</tr>
   </ng-template>
-
-  
-  <ng-template pTemplate="footer">
-    <tr>
-      <td colspan="4" class="text-end fw-bold">Total</td>
-      <td *ngFor="let day of weekDays" class="fw-bold">{{ getTotal(day) }}</td>
-    </tr>
-  </ng-template>
-</p-table>   -->
-<p-table [value]="projects" dataKey="id" [tableStyle]="{'min-width': '1000px'}" [(expandedRowKeys)]="expandedRows">
-  <ng-template pTemplate="header">
-    <tr>
-      <th style="width: 40px"></th>
-      <th>Projects / Tasks</th>
-      <th>Description <span class="header-date">(Jun 19)</span></th>
-      <th>Billability <span class="header-date">(Jun 19)</span></th>
-      <th *ngFor="let day of days">
-        {{ day.label }}<br>
-        <span class="header-date">{{ day.date }}</span>
-      </th>
-    </tr>
-  </ng-template>
-
-  <!-- Project Row -->
-  <ng-template pTemplate="body" let-project>
-    <tr>
-      <td>
-        <button pRowToggler [rowData]="project" class="p-button-text p-button-sm"
-          [icon]="expandedRows[project.id] ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-      </td>
-      <td>
-        <i class="pi pi-file project-icon"></i>
-        {{ project.name }}
-      </td>
-      <td></td>
-      <td></td>
-      <td *ngFor="let day of days" class="day-cell"></td>
-    </tr>
-  </ng-template>
-
-  <!-- Expanded Row: Show "+ Task" and Task Details -->
-  <ng-template pTemplate="rowexpansion" let-project>
-    <tr>
-      <td></td>
-      <td colspan="3">
-        <button pButton label="+ Task" class="p-button-text p-button-sm add-task-btn"
-          (click)="addTask(project)"></button>
-      </td>
-      <td *ngFor="let day of days" class="day-cell">00:00</td>
-    </tr>
-    <!-- Example: Show tasks if you want -->
-    <!--
-    <tr *ngFor="let task of project.tasks">
-      <td></td>
-      <td colspan="3">{{ task.name }}</td>
-      <td *ngFor="let day of days" class="day-cell">{{ task.hours[day.label] | number:'2.0-2' }}</td>
-    </tr>
-    -->
-  </ng-template>
-
-  <!-- Footer for Totals -->
-  <ng-template pTemplate="footer">
-    <tr class="total-row">
-      <td colspan="4" style="text-align:right; color:#1976d2; font-weight:600;">Total</td>
-      <td *ngFor="let day of days" style="color:#1976d2; font-weight:600;">00:00</td>
-    </tr>
-  </ng-template>
+<!-- FINAL TOTAL ROW at the end of table -->
+<ng-template #footer>
+  <tr class="p-rowgroup-footer" style="background-color: #f4fbff">
+    <td colspan="3" style="text-align: right; font-weight: bold; color: #0d6efd">Total</td>
+    <td style="color: #0d6efd">00:00</td>
+    <td style="color: #0d6efd">00:00</td>
+    <td style="color: #0d6efd">00:00</td>
+    <td style="color: #0d6efd">00:00</td>
+    <td style="color: #0d6efd">00:00</td>
+    <td style="color: #0d6efd">00:00</td>
+    <td style="color: #0d6efd">00:00</td>
+  </tr>
+</ng-template>
 </p-table>

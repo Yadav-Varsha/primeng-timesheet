@@ -10,7 +10,10 @@ import { Project } from '../models/project.model';
   styleUrl: './project-modal.component.css'
 })
 export class ProjectModalComponent  {
-  constructor(public projectModalService: ProjectModalService) {}
+constructor(
+    public projectModalService: ProjectModalService,
+   // ✅ Inject service
+  ) {}
 
   newProject = {
     name: '',
@@ -22,44 +25,28 @@ export class ProjectModalComponent  {
     comment: ''
   };
 
-  // saveProject() {
-  //   if (!this.newProject.name || !this.newProject.client) {
-  //     alert('Please enter project name and client');
-  //     return;
-  //   }
-
-  //   const projects = JSON.parse(localStorage.getItem('projects') || '[]');
-  //   projects.push({
-  //     ...this.newProject,
-  //     id: Date.now(),
-  //     tasks: []
-  //   });
-
-  //   localStorage.setItem('projects', JSON.stringify(projects));
-
-  //   this.projectModalService.close(); // close the modal
-  //   this.resetForm();                 // reset fields
-  // }
   saveProject() {
-  if (!this.newProject.name || !this.newProject.client) {
-    alert('Project Name and Client are required');
-    return;
+    if (!this.newProject.name || !this.newProject.client) {
+      alert('Project Name and Client are required');
+      return;
+    }
+
+    const existing = JSON.parse(localStorage.getItem('projects') || '[]');
+
+    const newEntry = {
+      ...this.newProject,
+      id: Date.now(),
+      tasks: []
+    };
+
+    existing.push(newEntry);
+    localStorage.setItem('projects', JSON.stringify(existing));
+
+    this.projectModalService.refresh(); // ✅ Trigger update to timesheet
+
+    this.close();
+    this.resetForm();
   }
-
-  const existing = JSON.parse(localStorage.getItem('projects') || '[]');
-
-  const newEntry = {
-    ...this.newProject,
-    id: Date.now(), // optional
-    tasks: []       // optional if you'll add tasks later
-  };
-
-  existing.push(newEntry);
-  localStorage.setItem('projects', JSON.stringify(existing));
-
-  this.close();     // ✅ Close the modal
-  this.resetForm(); // ✅ Reset form fields
-}
 
   close() {
     this.projectModalService.close();
