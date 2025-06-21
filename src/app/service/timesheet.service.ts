@@ -6,9 +6,9 @@ import { Project } from '../models/project.model';
 })
 export class TimesheetService {
 
-  constructor() { }
-    private storageKey = 'weeklyTimesheet';
-
+ constructor() { }
+  private storageKey = 'weeklyTimesheet';
+ private weekKey = 'currentWeekStart';
   getProjects(): Project[] {
     const data = localStorage.getItem(this.storageKey);
     return data ? JSON.parse(data) : [];
@@ -16,5 +16,14 @@ export class TimesheetService {
 
   saveProjects(projects: Project[]): void {
     localStorage.setItem(this.storageKey, JSON.stringify(projects));
+  }
+
+   getCurrentWeekStart(): Date {
+    const saved = localStorage.getItem(this.weekKey);
+    return saved ? new Date(saved) : new Date();
+  }
+
+  setCurrentWeekStart(date: Date): void {
+    localStorage.setItem(this.weekKey, date.toISOString());
   }
 }

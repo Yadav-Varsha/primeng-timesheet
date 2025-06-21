@@ -3,7 +3,7 @@ import { Project } from '../models/project.model';
 import { TaskEntry } from '../models/task-entry.model';
 import { TimesheetService } from '../service/timesheet.service';
 import { FormsModule } from '@angular/forms';
-
+import { TaskService } from '../service/task.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { NgFor, NgForOf, NgIf } from '@angular/common';
@@ -16,8 +16,11 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ProjectModalService } from '../service/project-modal.service';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
-import { Checkbox } from 'primeng/checkbox';
-import { TaskService } from '../service/task.service';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { addDays, startOfWeek, format } from 'date-fns';
+
+
 
 @Component({
   selector: 'app-timesheet',
@@ -25,20 +28,78 @@ import { TaskService } from '../service/task.service';
     TableModule,
     InputTextModule,
     ToggleButtonModule,
-    ButtonModule, SplitButtonModule, CalendarModule, ButtonGroupModule, ButtonModule, InputNumberModule, InputSwitchModule, TableModule, NgIf, NgFor, NgForOf,Checkbox],
+    ButtonModule, SplitButtonModule, CalendarModule, ButtonGroupModule, ButtonModule, InputNumberModule, InputSwitchModule, TableModule, NgIf, NgFor, NgForOf, CommonModule, ],
   templateUrl: './timesheet.component.html',
   styleUrls: ['./timesheet.component.css']
 })
 export class TimesheetComponent implements OnInit  {
  projects: any[] = [];
+// In your TimesheetComponent class
+editRow: any = null;
+editCol: string | null = null;
+ weekDays: { label: string; date: string }[] = [];
+currentWeekStart: Date = new Date();
+weekStart: Date = new Date();
+weekEnd: Date = new Date();
 
-  constructor(private projectModalService: ProjectModalService, private taskService: TaskService) {}
+  constructor(private projectModalService: ProjectModalService, private taskService: TaskService, private timesheetService: TimesheetService) {}
 
-  ngOnInit(): void {
-    // Subscribe and assign once
-    this.projectModalService.projects$.subscribe(data => {
-      this.projects = data;
+ngOnInit(): void {
+  this.currentWeekStart = this.timesheetService.getCurrentWeekStart();
+  this.setWeekDays(this.currentWeekStart);
+  this.setWeekRange(this.currentWeekStart); // <-- add this line
+  // Load projects from localStorage
+  this.projects = this.timesheetService.getProjects();
+
+  // If you want to listen to projectModalService.projects$ as well:
+  this.projectModalService.projects$.subscribe(data => {
+    this.projects = data;
+    this.save(); // Save to localStorage when projects change
+  });
+}
+
+setWeekRange(date: Date) {
+  this.weekStart = startOfWeek(date, { weekStartsOn: 1 }); // Monday
+  this.weekEnd = addDays(this.weekStart, 6); // Sunday
+}
+getProjectDayTotal(project: any, dayLabel: string): number {
+  let total = 0;
+  for (const task of project.tasks) {
+    total += Number(task.hours?.[dayLabel] || 0);
+  }
+  return total;
+}
+formatHour(value: number | undefined): string {
+  const v = Number(value) || 0;
+  const hours = Math.floor(v);
+  const minutes = Math.round((v - hours) * 60);
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+}
+    // In your TimesheetComponent
+setWeekDays(startDate: Date) {
+  const days = [];
+  const weekStart = startOfWeek(startDate, { weekStartsOn: 1 }); // Monday
+  for (let i = 0; i < 7; i++) {
+    const date = addDays(weekStart, i);
+    days.push({
+      label: format(date, 'EEE'),      // 'Mon'
+      date: format(date, 'MMM dd')     // 'Jun 16'
     });
+  }
+  this.weekDays = days;
+  this.timesheetService.setCurrentWeekStart(weekStart);
+}
+
+  prevWeek() {
+    this.currentWeekStart = addDays(this.currentWeekStart, -7);
+    this.setWeekDays(this.currentWeekStart);
+     this.setWeekRange(this.currentWeekStart); // <-- add this line
+  }
+
+  nextWeek() {
+    this.currentWeekStart = addDays(this.currentWeekStart, 7);
+    this.setWeekDays(this.currentWeekStart);
+      this.setWeekRange(this.currentWeekStart); // <-- add this line
   }
 
    openModal() {
@@ -54,80 +115,45 @@ export class TimesheetComponent implements OnInit  {
 openTask(project: any) {
   this.taskService.open(project.id, project.name);
 }
-// export class TimesheetComponent {
-//   constructor(public projectModalService: ProjectModalService) {}
-
-//   openModal() {
-//     this.projectModalService.open();
-//   }
-   
-//   projects: Project[] = [];
-//   weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-//   constructor(private timesheetService: TimesheetService) { }
-
-//   ngOnInit(): void {
-//     this.projects = this.timesheetService.getProjects();
-//   }
-
-//   addTask(project: Project): void {
-//   const newTask: TaskEntry = {
-//     id: Date.now(), // or project.tasks.length + 1
-//     description: '',
-//     billable: false,
-//     hours: this.initializeHours()
-//   };
-//   project.tasks.push(newTask);
-//   this.save();
-// }
 
 
-//   initializeHours(): { [key: string]: number } {
-//     const hours: { [key: string]: number } = {};
-//     this.weekDays.forEach(day => (hours[day] = 0));
-//     return hours;
-//   }
 
-//   getTotal(day: string): number {
-//     return this.projects.reduce((sum, p) =>
-//       sum + p.tasks.reduce((s, t) => s + (t.hours[day] || 0), 0), 0);
-//   }
+getTaskTotal(task: any): number {
+  return this.weekDays
+    .map(day => Number(task.hours?.[day.label] || 0))   // CORRECT
+    .reduce((a, b) => a + b, 0);
+}
 
-//   save(): void {
-//     this.timesheetService.saveProjects(this.projects);
-//   }
-  // projects = [
-  //   {
-  //     id: 1,
-  //     name: 'Internship Feb...',
-  //     tasks: [
-  //       {
-  //         id: 1,
-  //         name: 'Task 1',
-  //         description: 'Initial setup',
-  //         billable: true,
-  //         hours: { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 },
-  //         status: 'Open'
-  //       }
-  //     ]
-  //   }
-  // ];
 
-  // days = [
-  //   { label: 'Mon', date: 'Jun 16' },
-  //   { label: 'Tue', date: 'Jun 17' },
-  //   { label: 'Wed', date: 'Jun 18' },
-  //   { label: 'Thu', date: 'Jun 19' },
-  //   { label: 'Fri', date: 'Jun 20' },
-  //   { label: 'Sat', date: 'Jun 21' },
-  //   { label: 'Sun', date: 'Jun 22' }
-  // ];
+getDayTotal(dayLabel: string): number {
+  let total = 0;
+  for (const project of this.projects) {
+    for (const task of project.tasks) {
+      total += Number(task.hours?.[dayLabel] || 0);    // CORRECT
+    }
+  }
+  return total;
+}
 
-  // expandedRows: { [key: string]: boolean } = {};
+getGrandTotal(): number {
+  let total = 0;
+  for (const project of this.projects) {
+    for (const task of project.tasks) {
+      total += this.getTaskTotal(task);
+    }
+  }
+  return total;
+}
 
-  // addTask(project: any) {
-  //   // Add your logic to open a modal or add a task
-  //   alert('Add Task for ' + project.name);
-  // }
+save(): void {
+  this.timesheetService.saveProjects(this.projects);
+}
+// ...existing code...
+onHourChange(projectId: string, tasks: any[]) {
+  this.taskService.saveTaskHours(projectId, tasks);
+}
+// ...existing code...
+
+
 
 }

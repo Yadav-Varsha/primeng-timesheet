@@ -28,26 +28,32 @@ export class TaskComponent {
   }
 
   // Save task with attached project info
-  saveTask() {
-    const task = {
-      ...this.newTask,
-      projectId: this.taskService.selectedProjectId,
-      projectName: this.taskService.selectedProjectName
-    };
+saveTask() {
+  const task = {
+    ...this.newTask,
+    billable: this.newTask.billable === 'true' || this.newTask.billable === true, // ✅ Fix
+    projectId: this.taskService.selectedProjectId,
+    projectName: this.taskService.selectedProjectName,
+    hours: { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 } // ✅ Default hours
+  };
 
-    this.taskService.saveTask(task);
+  this.taskService.saveTask(task); // Calls TaskService
+  this.newTask = {
+    name: '',
+    description: '',
+    status: '',
+    billable: '',
+    comment: ''
+  };
+}
 
-    // Reset form after saving
-    this.newTask = {
-      name: '',
-      description: '',
-      status: '',
-      billable: '',
-      comment: ''
-    };
-  }
 
   get projectName() {
     return this.taskService.selectedProjectName;
   }
+  // ...existing code...
+onHourChange(projectId: string, tasks: any[]) {
+  this.taskService.saveTaskHours(projectId, tasks);
+}
+// ...existing code...
 }

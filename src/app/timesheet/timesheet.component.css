@@ -368,3 +368,50 @@ a:hover {
 .p-table thead th:last-child {
   border-top-right-radius: 6px;
 }
+
+.billable-pill {
+  display: inline-block;
+  padding: 4px 18px;
+  border-radius: 999px;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: #fff;
+  user-select: none;
+  transition: background 0.2s;
+  min-width: 110px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.billable-pill.billable {
+  background: #198754; /* Bootstrap green */
+}
+.billable-pill.non-billable {
+  background: #6c757d; /* Bootstrap gray */
+}
+
+.date-navigation-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.date-navigation-bar .nav-btn,
+.date-navigation-bar .calendar-btn {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  color: #444;
+  padding: 4px 8px;
+}
+
+.date-navigation-bar .date-range {
+  font-weight: 500;
+  font-size: 1.1em;
+  margin: 0 12px;
+  color: #222;
+  min-width: 180px;
+  text-align: center;
+}
