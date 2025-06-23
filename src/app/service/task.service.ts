@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Project } from '../models/project.model';
 import { TaskEntry } from '../models/task-entry.model';
 import { ProjectModalService } from './project-modal.service'; // ✅ Import the service
+import { startOfWeek } from 'date-fns';
 
 @Injectable({
   providedIn: 'root'
@@ -46,14 +47,15 @@ export class TaskService {
     this.close();
   }
 
-  saveTaskHours(projectId: string, tasks: TaskEntry[]) {
-  // Sabhi projects fetch karo
-  const allProjects: Project[] = JSON.parse(localStorage.getItem('projects') || '[]');
-  // Sahi project dhoondo
-  const project = allProjects.find((p: Project) => p.id.toString() === projectId.toString());
-  if (project) {
-    project.tasks = tasks;
-    localStorage.setItem('projects', JSON.stringify(allProjects));
+  // Save task hours for a specific week
+  saveTaskHours(projectId: string, tasks: TaskEntry[], weekDate: Date) {
+    const weekStart = startOfWeek(weekDate, { weekStartsOn: 1 });
+    const key = `weeklyTimesheet-${weekStart.getFullYear()}-${weekStart.getMonth() + 1}-${weekStart.getDate()}`;
+    const allProjects: Project[] = JSON.parse(localStorage.getItem(key) || '[]');
+    const project = allProjects.find((p: Project) => p.id.toString() === projectId.toString());
+    if (project) {
+      project.tasks = tasks;
+      localStorage.setItem(key, JSON.stringify(allProjects));
+    }
   }
-}
 }

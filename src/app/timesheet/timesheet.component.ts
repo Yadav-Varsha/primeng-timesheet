@@ -41,22 +41,22 @@ editCol: string | null = null;
 currentWeekStart: Date = new Date();
 weekStart: Date = new Date();
 weekEnd: Date = new Date();
-
+ weeklyHours: { [taskId: number]: { hours: { [day: string]: number }, billable?: boolean } } = {};
   constructor(private projectModalService: ProjectModalService, private taskService: TaskService, private timesheetService: TimesheetService) {}
 
-ngOnInit(): void {
-  this.currentWeekStart = this.timesheetService.getCurrentWeekStart();
-  this.setWeekDays(this.currentWeekStart);
-  this.setWeekRange(this.currentWeekStart); // <-- add this line
-  // Load projects from localStorage
-  this.projects = this.timesheetService.getProjects();
+ ngOnInit(): void {
+    this.currentWeekStart = this.timesheetService.getCurrentWeekStart();
+    this.setWeekDays(this.currentWeekStart);
+    this.setWeekRange(this.currentWeekStart);
+    this.loadProjectsAndHours();
 
-  // If you want to listen to projectModalService.projects$ as well:
-  this.projectModalService.projects$.subscribe(data => {
-    this.projects = data;
-    this.save(); // Save to localStorage when projects change
-  });
-}
+    this.projectModalService.projects$.subscribe(data => {
+      this.projects = data;
+        this.ensureTaskIds(); // Ensure IDs after loading
+      this.save();
+    });
+  }
+
 
 setWeekRange(date: Date) {
   this.weekStart = startOfWeek(date, { weekStartsOn: 1 }); // Monday
@@ -69,12 +69,14 @@ getProjectDayTotal(project: any, dayLabel: string): number {
   }
   return total;
 }
-formatHour(value: number | undefined): string {
-  const v = Number(value) || 0;
-  const hours = Math.floor(v);
-  const minutes = Math.round((v - hours) * 60);
-  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-}
+
+
+ formatHour(value: number | undefined): string {
+    const v = Number(value) || 0;
+    const hours = Math.floor(v);
+    const minutes = Math.round((v - hours) * 60);
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+  }
     // In your TimesheetComponent
 setWeekDays(startDate: Date) {
   const days = [];
@@ -90,18 +92,55 @@ setWeekDays(startDate: Date) {
   this.timesheetService.setCurrentWeekStart(weekStart);
 }
 
-  prevWeek() {
+   prevWeek() {
     this.currentWeekStart = addDays(this.currentWeekStart, -7);
     this.setWeekDays(this.currentWeekStart);
-     this.setWeekRange(this.currentWeekStart); // <-- add this line
+    this.setWeekRange(this.currentWeekStart);
+    this.loadProjectsAndHours();
   }
 
-  nextWeek() {
+   nextWeek() {
     this.currentWeekStart = addDays(this.currentWeekStart, 7);
     this.setWeekDays(this.currentWeekStart);
-      this.setWeekRange(this.currentWeekStart); // <-- add this line
+    this.setWeekRange(this.currentWeekStart);
+    this.loadProjectsAndHours();
   }
 
+    loadProjectsAndHours() {
+    this.projects = this.timesheetService.getProjects();
+    this.ensureTaskIds(); // Har task ka unique id hona chahiye
+    this.weeklyHours = this.timesheetService.getWeeklyHours(this.currentWeekStart);
+
+    // Yaha change: Har task me us week ke hours merge karo
+     for (const project of this.projects) {
+    for (const task of project.tasks) {
+      const wh = this.weeklyHours[task.id];
+      if (wh && wh.hours) {
+        task.hours = { ...wh.hours }; // <-- Yaha change: sirf tabhi assign karo jab data ho
+      }
+      // Billable bhi isi tarah
+      if (wh && wh.billable !== undefined) {
+        task.billable = wh.billable;
+      }
+    }
+  }
+  }
+
+
+  
+  // Ensure every task has a unique, persistent id
+  ensureTaskIds() {
+    let changed = false;
+    for (const project of this.projects) {
+      for (const task of project.tasks) {
+        if (!task.id) {
+          task.id = Date.now() + Math.floor(Math.random() * 1000000);
+          changed = true;
+        }
+      }
+    }
+    if (changed) this.save();
+  }
    openModal() {
    this.projectModalService.open();
   }
@@ -117,19 +156,18 @@ openTask(project: any) {
 }
 
 
-
 getTaskTotal(task: any): number {
   return this.weekDays
-    .map(day => Number(task.hours?.[day.label] || 0))   // CORRECT
+    .map(day => this.weeklyHours[task.id]?.hours?.[day.label] ?? 0)
     .reduce((a, b) => a + b, 0);
 }
-
 
 getDayTotal(dayLabel: string): number {
   let total = 0;
   for (const project of this.projects) {
     for (const task of project.tasks) {
-      total += Number(task.hours?.[dayLabel] || 0);    // CORRECT
+      // Yaha sirf weeklyHours object se value lo, task.hours se nahi!
+      total += Number(this.weeklyHours[task.id]?.hours?.[dayLabel] ?? 0);
     }
   }
   return total;
@@ -148,12 +186,30 @@ getGrandTotal(): number {
 save(): void {
   this.timesheetService.saveProjects(this.projects);
 }
-// ...existing code...
-onHourChange(projectId: string, tasks: any[]) {
-  this.taskService.saveTaskHours(projectId, tasks);
+  onHourChange(task: TaskEntry) {
+    this.weeklyHours[task.id] = this.weeklyHours[task.id] || { hours: {} };
+    this.weeklyHours[task.id].hours = { ...task.hours };
+    this.timesheetService.saveWeeklyHours(this.currentWeekStart, this.weeklyHours);
+  }
+
+    onBillableToggle(task: TaskEntry) {
+    this.weeklyHours[task.id] = this.weeklyHours[task.id] || { hours: {} };
+    this.weeklyHours[task.id].billable = task.billable;
+    this.timesheetService.saveWeeklyHours(this.currentWeekStart, this.weeklyHours);
+  }
+
+  getWeeklyHour(taskId: number, day: string): number {
+  // Agar weeklyHours object me value hai to wahi dikhao, warna 0 dikhao
+  return this.weeklyHours[taskId]?.hours?.[day] ?? 0;
 }
-// ...existing code...
 
-
+setWeeklyHour(task: any, day: string, value: number) {
+  // Agar weeklyHours object me entry nahi hai to banao
+  if (!this.weeklyHours[task.id]) {
+    this.weeklyHours[task.id] = { hours: {} };
+  }
+  this.weeklyHours[task.id].hours[day] = value;
+  this.timesheetService.saveWeeklyHours(this.currentWeekStart, this.weeklyHours);
+}
 
 }
