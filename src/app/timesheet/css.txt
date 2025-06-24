@@ -1,0 +1,596 @@
+/* .tabs {
+  display: flex;
+  gap: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tab-link {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  padding-bottom: 8px;
+  border-bottom: 3px solid transparent; /* reserve space */
+  /* transition: all 0.3s;
+} */
+
+/* .tab-link:hover {
+  color: #007bff;
+}
+
+/* Active tab: blue text + underline */
+/* .active-tab {
+  color: #007bff;
+  border-bottom: 3px solid #007bff;
+}
+
+
+
+.timesheet-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  
+  flex-wrap: nowrap;
+  gap: 1.5rem;
+}
+
+
+.date-navigation,
+.summary-submit {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.date-range {
+  font-weight: 500;
+}
+
+.logged {
+  color: red;
+  font-weight: 600;
+}
+
+.submitted {
+ 
+  font-weight: 600;
+}  */
+
+/* Hide input, show only icon */
+/* .calendar-icon-only .p-inputtext {
+  display: none !important;
+}
+
+.calendar-icon-only .p-datepicker-trigger {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  margin-left: 0.25rem;
+  font-size: 1.2rem;
+  color: #6c757d;
+  cursor: pointer;
+} */
+
+.tab-navigation {
+  display: flex;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: white;
+}
+ 
+.tab {
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #6c757d;
+}
+ 
+.tab.active {
+  color: #0d6efd;
+  border-bottom: 2px solid #0d6efd;
+  font-weight: 500;
+}
+ 
+.tab i {
+  font-size: 18px;
+}
+
+.view-controls {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  justify-content: space-between;
+  background-color: white;
+  margin-top: 4px;
+ 
+  /* border-bottom: 2px solid #e0e0e0; */
+}
+ 
+.view-tabs {
+display: flex;
+border: 1px solid #dee2e6;
+border-radius: 4px;
+overflow: hidden;
+}
+ 
+.view-tab {
+padding: 5px 15px;
+border: none;
+background: white;
+cursor: pointer;
+}
+ 
+.view-tab.active {
+background-color: #f8f9fa;
+color: #0d6efd;
+}
+
+ 
+.date-navigation {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+ 
+.date-range {
+  font-weight: 500;
+}
+ 
+ 
+.nav-btn, .calendar-btn {
+  border: 1px solid #dee2e6;
+  background: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+ 
+.hour-summary {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+ 
+.logged-hours {
+  display: flex;
+  flex-direction: column;
+  border-left: 3px solid #dc3545;
+  padding-left: 10px;
+}
+ 
+.submitted-hours {
+  display: flex;
+  flex-direction: column;
+  border-left: 3px solid #198754;
+  padding-left: 10px;
+}
+ 
+.hour-value {
+  font-weight: 500;
+}
+ 
+.hour-label {
+  font-size: 12px;
+  color: #6c757d;
+}
+ 
+.submit-btn {
+  padding: 6px 16px;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+ 
+.project-btn {
+  padding: 6px 16px;
+  background-color: white;
+  color: #0d6efd;
+  border: 1px solid #0d6efd;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+ 
+.project-btn:hover {
+  background-color: #f0f7ff;
+}
+.options-btn {
+  padding: 6px 12px;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+}
+td {
+  border: 1px solid red;
+}
+
+
+/* ===== Base Table Styling ===== */
+::ng-deep .p-datatable {
+  font-family: "Segoe UI", sans-serif;
+  font-size: 14px;
+  border: none;
+  width: 100%;
+}
+
+/* ===== Header Styling ===== */
+::ng-deep .p-datatable thead th {
+  background-color: #fafafa;
+  font-weight: 600;
+  color: #1a1a1a;
+  border: none;
+  text-align: center;
+  padding: 10px;
+  white-space: nowrap;
+}
+
+/* ===== Highlight Today (e.g. Friday) ===== */
+::ng-deep .p-datatable thead th:nth-child(8),
+::ng-deep .p-datatable tbody td:nth-child(8) {
+  background-color: #f3f9ff;
+  border: 1px solid #cde6ff;
+}
+
+/* ===== Group Header (Project Row) ===== */
+::ng-deep .p-rowgroup-header {
+  background-color: #fff;
+  font-weight: 600;
+  border-bottom: 1px solid #eee;
+  padding: 0;
+}
+
+::ng-deep .p-rowgroup-header td {
+  padding: 10px 16px;
+}
+
+::ng-deep .p-rowgroup-header .flex {
+  align-items: center;
+}
+
+::ng-deep .p-rowgroup-header img {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+/* ===== Expanded Task Rows ===== */
+::ng-deep .p-datatable tbody td {
+  text-align: center;
+  padding: 8px;
+  color: #666;
+  border: none;
+}
+
+::ng-deep .p-datatable tbody td:first-child {
+  text-align: left;
+  padding-left: 16px;
+}
+
+/* ===== Muted 00:00 Values ===== */
+::ng-deep .p-datatable tbody td {
+  color: #888;
+}
+
+/* ===== Total Row Styling ===== */
+::ng-deep .p-rowgroup-footer {
+  background-color: #f0faff;
+  color: #007bff;
+  font-weight: 600;
+}
+
+::ng-deep .p-rowgroup-footer td {
+  text-align: center;
+  padding: 10px;
+}
+
+/* ===== "+ Task" Styling ===== */
+::ng-deep .p-rowgroup-header a,
+::ng-deep .p-datatable tbody a {
+  color: #007bff;
+  margin-left: 12px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+::ng-deep .p-rowgroup-header a:hover,
+::ng-deep .p-datatable tbody a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Remove Scrollbar ===== */
+::ng-deep .p-datatable-scrollable-body {
+  overflow-x: hidden !important;
+}
+
+
+/* === TOTAL ROW AT BOTTOM === */
+.p-rowgroup-footer {
+  background-color: #f4fbff;
+  font-weight: 600;
+}
+
+.p-rowgroup-footer td {
+  color: #0d6efd;
+  text-align: center;
+  padding: 10px 12px;
+  border-top: 1px solid #cde8f8;
+  border-right: 1px solid #cde8f8;
+}
+
+.p-rowgroup-footer td:first-child {
+  text-align: right;
+}
+
+.p-rowgroup-footer td:last-child {
+  border-right: none;
+}
+
+/* === Project Icon Styling === */
+.project-img {
+  margin-right: 8px;
+  border-radius: 4px;
+}
+
+/* === "+ Task" Link === */
+a {
+  color: #0d6efd;
+  font-weight: 500;
+  text-decoration: none;
+  margin-left: 8px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* === Optional: Rounded top corners for first row === */
+.p-table thead th:first-child {
+  border-top-left-radius: 6px;
+}
+.p-table thead th:last-child {
+  border-top-right-radius: 6px;
+}
+
+.billable-pill {
+  display: inline-block;
+  padding: 4px 18px;
+  border-radius: 999px;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: #fff;
+  user-select: none;
+  transition: background 0.2s;
+  min-width: 110px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.billable-pill.billable {
+  background: #198754; /* Bootstrap green */
+}
+.billable-pill.non-billable {
+  background: #6c757d; /* Bootstrap gray */
+}
+
+.date-navigation-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.date-navigation-bar .nav-btn,
+.date-navigation-bar .calendar-btn {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  color: #444;
+  padding: 4px 8px;
+}
+
+.date-navigation-bar .date-range {
+  font-weight: 500;
+  font-size: 1.1em;
+  margin: 0 12px;
+  color: #222;
+  min-width: 180px;
+  text-align: center;
+}
+
+
+itp
+
+.p-component {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+
+
+/* Ensure all table cells and headers use the same sizing */
+.p-table th, .p-table td,
+.p-datatable th, .p-datatable td {
+  box-sizing: border-box;
+  padding: 8px 0;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 15px;
+}
+
+
+
+/* First column left align for all rows */
+.p-table td:first-child, .p-datatable td:first-child,
+.p-table th:first-child, .p-datatable th:first-child {
+  text-align: left;
+  padding-left: 16px;
+}
+
+/* Total row styling */
+.p-rowgroup-footer, tr.p-rowgroup-footer {
+  background: #f4fbff !important;
+  color: #0d6efd !important;
+  font-weight: 600;
+}
+.p-rowgroup-footer td, tr.p-rowgroup-footer td {
+  background: #f4fbff !important;
+  color: #0d6efd !important;
+  border-top: 1.5px solid #e0f0ff;
+  border-right: 1px solid #e0f0ff;
+  text-align: start;
+  padding: 20px 0;
+  font-size: 15px;
+}
+.p-rowgroup-footer td:first-child, tr.p-rowgroup-footer td:first-child {
+  text-align: right;
+  padding-right: 16px;
+}
+.p-rowgroup-footer td:last-child, tr.p-rowgroup-footer td:last-child {
+  border-right: none;
+}
+
+/* Remove all borders from table cells for a clean look */
+td, th {
+  border: none !important;
+}
+
+html code
+
+
+<p-table [value]="projects" dataKey="name" rowGroupMode="subheader" groupRowsBy="name" sortField="name"
+  sortMode="single" class="timesheet-table" >
+  <!-- HEADER -->
+  <ng-template #header>
+    <tr>
+      <th>Projects / Tasks</th>
+  <th>Description</th>
+  <th>Billability</th>
+       <th *ngFor="let day of weekDays">{{ day.label }}<br />
+        <span class="header-date">{{ day.date }}</span>
+      </th>
+      <!-- <th>Total</th> -->
+    </tr>
+  </ng-template>
+
+  <!-- GROUP HEADER: Project Row With + Task and Time Columns -->
+  <ng-template #groupheader let-project let-expanded="expanded">
+    <tr>
+      <!-- Main Project Cell -->
+      <td class="align-middle">
+        <div class="flex items-center">
+          <button type="button" pButton pRipple [pRowToggler]="project" text rounded plain class="mr-2"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+
+          <!-- <img
+            src="https://primefaces.org/cdn/primeng/images/demo/avatar/avatar1.png"
+            width="24"
+            height="24"
+            class="mr-2"
+          /> -->
+
+          <img src="assets/project.png" alt="project" class="project-img" />
+          <span class="project-name mr-3">{{ project.name }}</span>
+
+          <!-- '+ Task' beside project name (only before expand) -->
+          <a *ngIf="!expanded" href="#" (click)="openTask(project)">+ Task</a>
+        </div>
+      </td>
+
+      <!-- Placeholder for description -->
+      <td></td>
+      <!-- Placeholder for billable -->
+      <td></td>
+
+      <!-- Hours columns: shown only when not expanded -->
+      <!-- Hours columns: visible only when not expanded -->
+      <ng-container *ngIf="!expanded">
+        <td *ngFor="let day of weekDays">
+          {{ formatHour(getProjectDayTotal(project, day.label)) }}
+        </td>
+      </ng-container>
+
+      <!-- Empty tds to preserve row structure when expanded -->
+      <ng-container *ngIf="expanded">
+        <td colspan="7"></td>
+      </ng-container>
+
+
+    </tr>
+  </ng-template>
+
+  <!-- EXPANDED ROW -->
+  <!-- EXPANDED ROW -->
+  <ng-template #expandedrow let-project>
+    <ng-container *ngFor="let task of project.tasks">
+      <tr>
+        <!-- Editable Task Name -->
+        <td>
+          {{ task.name }}
+        </td>
+        <!-- Editable Description -->
+        <td>
+          {{ task.description }}
+        </td>
+        <!-- Billable Toggle -->
+        <td>
+          <span class="billable-pill" [ngClass]="task.billable ? 'billable' : 'non-billable'"
+            (click)="task.billable = !task.billable; onBillableToggle(task)" style="cursor:pointer;">
+            {{ task.billable ? 'Billable' : 'Non-Billable' }}
+          </span>
+        </td>
+        <!-- Editable Hour Inputs for Each Day -->
+        <td *ngFor="let day of weekDays">
+          <ng-container *ngIf="editRow === task && editCol === day.label; else displayHour">
+            <input type="number" min="0" max="24" step="0.25" [ngModel]="getWeeklyHour(task.id, day.label)"
+              (ngModelChange)="setWeeklyHour(task, day.label, $event)"
+              style="width: 60px; text-align: center; appearance: textfield;" (blur)="editRow = null; editCol = null"
+              autofocus />
+          </ng-container>
+          <ng-template #displayHour>
+            <span style="cursor:pointer;" (click)="editRow = task; editCol = day.label">
+              {{ formatHour(getWeeklyHour(task.id, day.label)) }}
+            </span>
+          </ng-template>
+        </td>
+        <!-- Total Hours for Task -->
+        <!-- <td style="font-weight:600; color:#1976d2;">
+        {{ formatHour(getTaskTotal(task)) }}
+      </td> -->
+      </tr>
+    </ng-container>
+    <!-- Add Task Row -->
+    <tr>
+      <td colspan="11">
+        <a href="#" (click)="openTask(project)">+ Task</a>
+      </td>
+    </tr>
+  </ng-template>
+  <!-- FINAL TOTAL ROW at the end of table -->
+  <ng-template #footer>
+   <!-- Table Footer (Total Row) -->
+<tr class="p-rowgroup-footer">
+  <td colspan="3" style="text-align: right;">Total</td>
+  <td *ngFor="let day of weekDays">{{ formatHour(getDayTotal(day.label)) }}</td>
+</tr>
+  </ng-template>
+</p-table>

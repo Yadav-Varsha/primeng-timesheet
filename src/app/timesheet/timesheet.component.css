@@ -1,77 +1,3 @@
-/* .tabs {
-  display: flex;
-  gap: 2rem;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.tab-link {
-  color: #333;
-  text-decoration: none;
-  font-weight: 500;
-  padding-bottom: 8px;
-  border-bottom: 3px solid transparent; /* reserve space */
-  /* transition: all 0.3s;
-} */
-
-/* .tab-link:hover {
-  color: #007bff;
-}
-
-/* Active tab: blue text + underline */
-/* .active-tab {
-  color: #007bff;
-  border-bottom: 3px solid #007bff;
-}
-
-
-
-.timesheet-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-  
-  flex-wrap: nowrap;
-  gap: 1.5rem;
-}
-
-
-.date-navigation,
-.summary-submit {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.date-range {
-  font-weight: 500;
-}
-
-.logged {
-  color: red;
-  font-weight: 600;
-}
-
-.submitted {
- 
-  font-weight: 600;
-}  */
-
-/* Hide input, show only icon */
-/* .calendar-icon-only .p-inputtext {
-  display: none !important;
-}
-
-.calendar-icon-only .p-datepicker-trigger {
-  border: none;
-  background: transparent;
-  box-shadow: none;
-  padding: 0;
-  margin-left: 0.25rem;
-  font-size: 1.2rem;
-  color: #6c757d;
-  cursor: pointer;
-} */
 
 .tab-navigation {
   display: flex;
@@ -218,169 +144,46 @@ color: #0d6efd;
   border-radius: 4px;
   cursor: pointer;
 }
-td {
+/* td {
   border: 1px solid red;
+} */
+.project-name{
+  font-weight: bold;
+  font-size: 16px;
 }
 
-
-/* ===== Base Table Styling ===== */
-::ng-deep .p-datatable {
-  font-family: "Segoe UI", sans-serif;
-  font-size: 14px;
-  border: none;
-  width: 100%;
-}
-
-/* ===== Header Styling ===== */
-::ng-deep .p-datatable thead th {
-  background-color: #fafafa;
-  font-weight: 600;
-  color: #1a1a1a;
-  border: none;
-  text-align: center;
-  padding: 10px;
-  white-space: nowrap;
-}
-
-/* ===== Highlight Today (e.g. Friday) ===== */
-::ng-deep .p-datatable thead th:nth-child(8),
-::ng-deep .p-datatable tbody td:nth-child(8) {
-  background-color: #f3f9ff;
-  border: 1px solid #cde6ff;
-}
-
-/* ===== Group Header (Project Row) ===== */
-::ng-deep .p-rowgroup-header {
-  background-color: #fff;
-  font-weight: 600;
-  border-bottom: 1px solid #eee;
-  padding: 0;
-}
-
-::ng-deep .p-rowgroup-header td {
-  padding: 10px 16px;
-}
-
-::ng-deep .p-rowgroup-header .flex {
-  align-items: center;
-}
-
-::ng-deep .p-rowgroup-header img {
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
-}
-
-/* ===== Expanded Task Rows ===== */
-::ng-deep .p-datatable tbody td {
-  text-align: center;
-  padding: 8px;
-  color: #666;
-  border: none;
-}
-
-::ng-deep .p-datatable tbody td:first-child {
-  text-align: left;
-  padding-left: 16px;
-}
-
-/* ===== Muted 00:00 Values ===== */
-::ng-deep .p-datatable tbody td {
-  color: #888;
-}
-
-/* ===== Total Row Styling ===== */
-::ng-deep .p-rowgroup-footer {
-  background-color: #f0faff;
-  color: #007bff;
-  font-weight: 600;
-}
-
-::ng-deep .p-rowgroup-footer td {
-  text-align: center;
-  padding: 10px;
-}
-
-/* ===== "+ Task" Styling ===== */
-::ng-deep .p-rowgroup-header a,
-::ng-deep .p-datatable tbody a {
-  color: #007bff;
-  margin-left: 12px;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-::ng-deep .p-rowgroup-header a:hover,
-::ng-deep .p-datatable tbody a:hover {
-  text-decoration: underline;
-}
-
-/* ===== Remove Scrollbar ===== */
-::ng-deep .p-datatable-scrollable-body {
-  overflow-x: hidden !important;
-}
-
-
-/* === TOTAL ROW AT BOTTOM === */
-.p-rowgroup-footer {
-  background-color: #f4fbff;
-  font-weight: 600;
-}
-
-.p-rowgroup-footer td {
-  color: #0d6efd;
-  text-align: center;
-  padding: 10px 12px;
-  border-top: 1px solid #cde8f8;
-  border-right: 1px solid #cde8f8;
-}
-
-.p-rowgroup-footer td:first-child {
-  text-align: right;
-}
-
-.p-rowgroup-footer td:last-child {
-  border-right: none;
-}
-
-/* === Project Icon Styling === */
 .project-img {
-  margin-right: 8px;
-  border-radius: 4px;
+    width: 25px;
+    height: 25px;
+    margin-right: 15px;
+    margin-left: 15px;
+    margin-top: 10px;
+    border-radius: 4px;
+    vertical-align: middle;
 }
 
-/* === "+ Task" Link === */
-a {
-  color: #0d6efd;
-  font-weight: 500;
-  text-decoration: none;
-  margin-left: 8px;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* === Optional: Rounded top corners for first row === */
-.p-table thead th:first-child {
-  border-top-left-radius: 6px;
-}
-.p-table thead th:last-child {
-  border-top-right-radius: 6px;
+.project-name{
+    font-weight: bold;
+    font-size: 16px;
+    padding: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
 }
 
 .billable-pill {
-  display: inline-block;
-  padding: 4px 18px;
-  border-radius: 999px;
-  font-size: 0.95em;
-  font-weight: 600;
-  color: #fff;
-  user-select: none;
-  transition: background 0.2s;
-  min-width: 110px;
-  text-align: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    display: inline-block;
+    padding: 4px 12px;
+    margin-top: 5px;
+    border-radius: 50px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
+    -webkit-user-select: none;
+    user-select: none;
+    transition: background 0.2s;
+    min-width: 90px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 .billable-pill.billable {
   background: #198754; /* Bootstrap green */
@@ -414,4 +217,175 @@ a:hover {
   color: #222;
   min-width: 180px;
   text-align: center;
+}
+
+
+
+/* ====== TABLE STYLING FOR TIMESHEET ====== */
+/* .timesheet-table{
+margin-top: 16px;
+ font-family: 'Arial', sans-serif;
+  color: #333;
+} */
+
+
+/* =================== BASE STRUCTURE =================== */
+/* =================== BASE STRUCTURE =================== */
+
+.timesheet-table-wrapper {
+  margin-top: 20px; /* adjust as needed */
+}
+
+:host ::ng-deep .p-datatable {
+  border: none;
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  font-size: 15px;
+}
+
+/* =================== HEADER =================== */
+:host ::ng-deep .p-datatable thead tr {
+    background-color: #f9f9f9 !important;
+
+  font-weight: 600;
+  color: #1c1c1c;
+}
+
+/* Remove all borders from th except bottom */
+:host ::ng-deep .p-datatable thead th {
+  padding: 12px;
+  border: none;
+  border-bottom: 1px solid #f1f1f1;
+  background-color: #fff;
+  vertical-align: middle;
+  text-align: center;
+  font-weight: 600;
+  box-sizing: border-box;
+}
+
+/* First column left-aligned */
+:host ::ng-deep .p-datatable th:first-child,
+:host ::ng-deep .p-datatable td:first-child {
+  text-align: left;
+  padding-left: 16px;
+}
+
+/* =================== TODAY HEADER HIGHLIGHT =================== */
+::ng-deep th.today-highlight {
+  background-color: #F8F8F8 !important;
+  border-left: 1px solid #009cde !important;
+  border-right: 1px solid #009cde !important;
+  border-bottom: 2px solid #009cde !important;
+  border-top:  2px solid #009cde !important;
+  border-radius: 0 !important;
+}
+
+/* =================== ROW STYLING =================== */
+/* Project/task rows: only bottom border */
+:host ::ng-deep .p-datatable-tbody > tr > td {
+  padding: 12px;
+  border: none;
+  border-bottom: 1px solid #f1f1f1;
+  background-color: #ffffff;
+  vertical-align: middle;
+  text-align: center;
+  font-weight: 400;
+  box-sizing: border-box;
+}
+
+/* Project/task row: remove side borders too */
+:host ::ng-deep .p-datatable-tbody > tr.p-rowgroup-header > td {
+  border: none;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+/* Highlight today's column cells */
+::ng-deep .today-highlight {
+  background-color: #F5FBFD !important;
+}
+
+/* =================== TOTAL FOOTER ROW =================== */
+:host ::ng-deep .p-rowgroup-footer,
+:host ::ng-deep tr.p-rowgroup-footer {
+  background-color: #f4fbff !important;
+  color: #3699ff !important;
+  font-weight: 600;
+}
+
+:host ::ng-deep .p-rowgroup-footer td {
+  background: #F5FCFF !important;
+  border: none;
+  border-bottom: 1px solid #e0f0ff !important;
+  padding: 14px 10px;
+  font-size: 15px;
+  text-align: center;
+  color: #3699ff !important;
+}
+
+:host ::ng-deep .p-rowgroup-footer td:first-child {
+  text-align: right;
+  padding-right: 16px;
+}
+
+/* =================== INPUT STYLING =================== */
+:host ::ng-deep input[type="number"] {
+  width: 60px;
+  padding: 6px;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  appearance: textfield;
+}
+
+:host ::ng-deep input[type="number"]::-webkit-inner-spin-button,
+:host ::ng-deep input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* =================== "+ Task" Link =================== */
+:host ::ng-deep a {
+  color: #0d6efd;
+  font-weight: 500;
+  text-decoration: none;
+}
+:host ::ng-deep a:hover {
+  text-decoration: underline;
+}
+
+/* background-color: #F5FCFF !important;
+}
+.text-primary {
+    color: #3699ff !important;
+} */
+
+/* total
+/* .font-weight-boldest {
+    font-weight: 700;
+} */
+/* task */
+/* .font-weight-bold{
+  font-weight: 500 !important;
+
+} */
+ /* button-group */
+ .isMonthViewSelected[_ngcontent-ogq-c725] {
+    background-color: #f5e6ed !important;
+}
+.text-color[_ngcontent-ogq-c725] {
+    color: #9e0d51;
+}
+
+style {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.border-light-dark {
+    border-color: #d1d3e0 !important;
+}
+.font-weight-bolder {
+    font-weight: 600 !important;
 }

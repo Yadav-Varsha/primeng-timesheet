@@ -114,9 +114,11 @@
 
 <div class="view-controls">
   <div class="view-tabs">
+    <p-buttongroup>
     <p-button class="view-tab">Month</p-button>
     <p-button class="view-tab active">Week</p-button>
     <p-button class="view-tab ">Day</p-button>
+    </p-buttongroup>
   </div>
   <div class="date-navigation">
     <button class="nav-btn" (click)="prevWeek()">
@@ -147,95 +149,83 @@
   </div>
 </div>
 
-
+<div class="timesheet-table-wrapper">
 <p-table [value]="projects" dataKey="name" rowGroupMode="subheader" groupRowsBy="name" sortField="name"
-  sortMode="single">
+  sortMode="single" class="timesheet-table ">
+
   <!-- HEADER -->
   <ng-template #header>
     <tr>
-      <th style="width: 20%">Projects / Tasks</th>
-      <th style="width: 20%">Description</th>
-      <th style="width: 10%">Billability</th>
-      <th *ngFor="let day of weekDays">
-        {{ day.label }} <br />
-        <span class="header-date">{{ day.date }}</span>
-      </th>
-      <!-- <th>Total</th> -->
+      <th>Projects / Tasks</th>
+      <th>Description ({{ todayLabel }})</th>
+      <th>Billability ({{ todayLabel }})</th>
+     <th *ngFor="let day of weekDays; let i = index"
+    [ngClass]="{ 'today-highlight': i === todayIndex }">
+ {{ day.label }}<br />
+ <span class="header-date">{{ day.date | date:'MMM d' }}</span>
+</th>
+
+
     </tr>
   </ng-template>
 
-  <!-- GROUP HEADER: Project Row With + Task and Time Columns -->
+  <!-- GROUP HEADER ROW -->
   <ng-template #groupheader let-project let-expanded="expanded">
     <tr>
-      <!-- Main Project Cell -->
+      <!-- Project Title Cell -->
       <td class="align-middle">
         <div class="flex items-center">
           <button type="button" pButton pRipple [pRowToggler]="project" text rounded plain class="mr-2"
             [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
 
-          <!-- <img
-            src="https://primefaces.org/cdn/primeng/images/demo/avatar/avatar1.png"
-            width="24"
-            height="24"
-            class="mr-2"
-          /> -->
+          <img src="assets/project.png" alt="project" class="project-img" />
+          <span class="project-name mr-3">{{ project.name }}</span>
 
-          <img src="assets/project.png" alt="project" class="project-img" width="24" height="24" class="mr-2" />
-          <span class="font-bold mr-3">{{ project.name }}</span>
-
-          <!-- '+ Task' beside project name (only before expand) -->
-          <a *ngIf="!expanded" href="#" (click)="openTask(project)">+ Task</a>
+          <a *ngIf="!expanded" href="#" class="font-weight-bold" (click)="openTask(project)">+ Task</a>
         </div>
       </td>
 
-      <!-- Placeholder for description -->
       <td></td>
-      <!-- Placeholder for billable -->
       <td></td>
 
-      <!-- Hours columns: shown only when not expanded -->
-      <!-- Hours columns: visible only when not expanded -->
+      <!-- Project-level hours -->
       <ng-container *ngIf="!expanded">
-        <td *ngFor="let day of weekDays">
+       <td *ngFor="let day of weekDays; let i = index"
+      [ngClass]="{ 'today-highlight': i === todayIndex }">
           {{ formatHour(getProjectDayTotal(project, day.label)) }}
         </td>
       </ng-container>
 
-      <!-- Empty tds to preserve row structure when expanded -->
+      <!-- Placeholder columns when expanded -->
       <ng-container *ngIf="expanded">
         <td colspan="7"></td>
       </ng-container>
-
-
     </tr>
   </ng-template>
 
-  <!-- EXPANDED ROW -->
-  <!-- EXPANDED ROW -->
+  <!-- EXPANDED TASK ROWS -->
   <ng-template #expandedrow let-project>
     <ng-container *ngFor="let task of project.tasks">
       <tr>
-        <!-- Editable Task Name -->
-        <td>
-          {{ task.name }}
-        </td>
-        <!-- Editable Description -->
-        <td>
-          {{ task.description }}
-        </td>
-        <!-- Billable Toggle -->
+        <td>{{ task.name }}</td>
+        <td>{{ task.description }}</td>
         <td>
           <span class="billable-pill" [ngClass]="task.billable ? 'billable' : 'non-billable'"
-            (click)="task.billable = !task.billable; onBillableToggle(task)" style="cursor:pointer;">
+            (click)="task.billable = !task.billable; onBillableToggle(task)"
+            style="cursor:pointer;">
             {{ task.billable ? 'Billable' : 'Non-Billable' }}
           </span>
         </td>
-        <!-- Editable Hour Inputs for Each Day -->
-        <td *ngFor="let day of weekDays">
+
+        <!-- Daily Hour Inputs -->
+       <td *ngFor="let day of weekDays; let i = index"
+    [ngClass]="{ 'today-highlight': i === todayIndex }">
           <ng-container *ngIf="editRow === task && editCol === day.label; else displayHour">
-            <input type="number" min="0" max="24" step="0.25" [ngModel]="getWeeklyHour(task.id, day.label)"
+            <input type="number" min="0" max="24" step="0.25"
+              [ngModel]="getWeeklyHour(task.id, day.label)"
               (ngModelChange)="setWeeklyHour(task, day.label, $event)"
-              style="width: 60px; text-align: center; appearance: textfield;" (blur)="editRow = null; editCol = null"
+              style="width: 60px; text-align: center; appearance: textfield;"
+              (blur)="editRow = null; editCol = null"
               autofocus />
           </ng-container>
           <ng-template #displayHour>
@@ -244,30 +234,23 @@
             </span>
           </ng-template>
         </td>
-        <!-- Total Hours for Task -->
-        <!-- <td style="font-weight:600; color:#1976d2;">
-        {{ formatHour(getTaskTotal(task)) }}
-      </td> -->
       </tr>
     </ng-container>
-    <!-- Add Task Row -->
+
+    <!-- "+ Task" Row -->
     <tr>
       <td colspan="11">
-        <a href="#" (click)="openTask(project)">+ Task</a>
+        <a href="#" class="font-weight-bold" (click)="openTask(project)">+ Task</a>
       </td>
     </tr>
   </ng-template>
-  <!-- FINAL TOTAL ROW at the end of table -->
+
+  <!-- TOTAL FOOTER -->
   <ng-template #footer>
-    <tr class="p-rowgroup-footer" style="background-color: #f4fbff">
-      <td colspan="3" style="text-align: right; font-weight: bold; color: #0d6efd">Total</td>
-      <!-- CHANGED: use day.label instead of day -->
-      <td *ngFor="let day of weekDays" style="color: #0d6efd">
-        {{ formatHour(getDayTotal(day.label)) }}
-      </td>
-      <!-- <td style="color: #0d6efd; font-weight: bold;">
-        {{ formatHour(getGrandTotal()) }}
-      </td> -->
+    <tr class="p-rowgroup-footer font-weight-boldest">
+      <td colspan="3" style="text-align: right;">Total</td>
+      <td *ngFor="let day of weekDays">{{ formatHour(getDayTotal(day.label)) }}</td>
     </tr>
   </ng-template>
 </p-table>
+</div>

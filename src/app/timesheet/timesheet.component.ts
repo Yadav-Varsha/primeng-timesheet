@@ -34,6 +34,7 @@ import { addDays, startOfWeek, format } from 'date-fns';
 })
 export class TimesheetComponent implements OnInit  {
  projects: any[] = [];
+ todayLabel = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 // In your TimesheetComponent class
 editRow: any = null;
 editCol: string | null = null;
@@ -41,6 +42,7 @@ editCol: string | null = null;
 currentWeekStart: Date = new Date();
 weekStart: Date = new Date();
 weekEnd: Date = new Date();
+todayIndex: number = -1;
  weeklyHours: { [taskId: number]: { hours: { [day: string]: number }, billable?: boolean } } = {};
   constructor(private projectModalService: ProjectModalService, private taskService: TaskService, private timesheetService: TimesheetService) {}
 
@@ -49,7 +51,7 @@ weekEnd: Date = new Date();
     this.setWeekDays(this.currentWeekStart);
     this.setWeekRange(this.currentWeekStart);
     this.loadProjectsAndHours();
-
+    this.setTodayIndex();
     this.projectModalService.projects$.subscribe(data => {
       this.projects = data;
         this.ensureTaskIds(); // Ensure IDs after loading
@@ -84,13 +86,14 @@ setWeekDays(startDate: Date) {
   for (let i = 0; i < 7; i++) {
     const date = addDays(weekStart, i);
     days.push({
-      label: format(date, 'EEE'),      // 'Mon'
-      date: format(date, 'MMM dd')     // 'Jun 16'
+      label: format(date, 'EEE'),            // e.g., 'Mon'
+      date: format(date, 'yyyy-MM-dd')       // ✅ full ISO date: "2025-06-24"
     });
   }
   this.weekDays = days;
   this.timesheetService.setCurrentWeekStart(weekStart);
 }
+
 
    prevWeek() {
     this.currentWeekStart = addDays(this.currentWeekStart, -7);
@@ -212,4 +215,22 @@ setWeeklyHour(task: any, day: string, value: number) {
   this.timesheetService.saveWeeklyHours(this.currentWeekStart, this.weeklyHours);
 }
 
+
+
+setTodayIndex(): void {
+  const today = new Date();
+  this.todayIndex = this.weekDays.findIndex(day => {
+    const date = new Date(day.date);
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
+  });
+   console.log("TodayIndex:", this.todayIndex);
+  console.log("Dates in weekDays:", this.weekDays.map(d => d.date));
+  console.log("Today's Date:", today.toDateString());
 }
+
+}
+
