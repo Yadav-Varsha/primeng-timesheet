@@ -8,9 +8,12 @@ import { RouterModule } from '@angular/router';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  menu = [
-    { label: 'Timesheet', icon: 'pi pi-clock', path: '/timesheet' },
-    { label: 'Calendar', icon: 'pi pi-calendar', path: '/calendar' },
-    { label: 'Settings', icon: 'pi pi-cog', path: '/settings' }
-  ];
+menu = [
+  { label: 'Dashboard', icon: 'pi pi-home', path: '/dashboard' },
+  { label: 'Projects', icon: 'pi pi-folder-open', path: '/projects' },
+  { label: 'Activity', icon: 'pi pi-briefcase', path: '/activity' },
+  { label: 'Time Tracking', icon: 'pi pi-stopwatch', path: '/time-tracking' },
+  { label: 'Timesheet', icon: 'pi pi-calendar-clock', path: '/timesheet' }
+];
+
 }

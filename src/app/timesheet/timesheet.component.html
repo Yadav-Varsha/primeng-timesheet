@@ -113,10 +113,10 @@
 
 
 <div class="view-controls">
-  <div class="view-tabs">
+  <div class="view-tabs border-light-dark font-weight-bolder" style="border-top-right-radius: 0 !important; border-bottom-right-radius: 0 !important;">
     <p-buttongroup>
     <p-button class="view-tab">Month</p-button>
-    <p-button class="view-tab active">Week</p-button>
+    <p-button class="view-tab  isMonthViewSelected text-color">Week</p-button>
     <p-button class="view-tab ">Day</p-button>
     </p-buttongroup>
   </div>
@@ -143,8 +143,8 @@
     </div>
     <div class="action-buttons">
       <p-button class="project-btn" icon="pi pi-plus" label="Project" (click)="openModal()" />
-      <p-button label="Submit" class="submit-btn" [raised]="true" severity="info" />
-      <p-button class="options-btn"><i class="pi pi-chevron-down"></i></p-button>
+      <p-button class="submit-btn" [raised]="true" severity="info">Submit  <span class="breadcrumb-separator" style="margin-left: 6px;">|</span> <i class="pi pi-chevron-down" style="margin-left: 6px;"></i></p-button>
+     
     </div>
   </div>
 </div>

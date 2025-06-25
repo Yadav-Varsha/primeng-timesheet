@@ -1,99 +1,79 @@
-<!-- <div class="modal-backdrop" *ngIf="taskService.show">
-  <div class="modal-panel">
-    <div class="modal-header">
-      <h2>New Task</h2>
-      <button class="close-btn" (click)="close()">×</button>
-    </div>
+<form #form="ngForm" (ngSubmit)="saveTask()" *ngIf="taskService.show">
+  <div class="modal-backdrop">
+    <div class="modal-panel-right">
+      <div class="modal-header">
+        <h2>New Task</h2>
+        <button class="close-btn" type="button" (click)="close()">×</button>
+      </div>
 
-    <div class="modal-body">
-      <!-- Project Name (readonly) -->
-      <!-- <label>Project *</label>
-      <input type="text" [value]="projectName" disabled /> -->
+      <div class="modal-body">
+        <label>Project Name <span class="red-star">*</span></label>
+        <input type="text" [value]="projectName" disabled />
 
-      <!-- Task Name -->
-      <!-- <label>Task Name *</label>
-      <input type="text" [(ngModel)]="newTask.name" placeholder="Enter Task Name" /> -->
+        <label>Task Name <span class="red-star">*</span></label>
+        <input type="text" name="name" [(ngModel)]="newTask.name" required #name="ngModel"
+          [ngClass]="{ 'invalid': name.invalid && taskForm.submitted }" placeholder="Enter task name" />
+        <div class="error" *ngIf="name.invalid && taskForm.submitted">Task Name is required.</div>
+<!-- task category -->
+        <!-- <label>Task Category <span class="red-star">*</span></label>
+        <select name="category" [(ngModel)]="newTask.category" required #category="ngModel"
+          [ngClass]="{ 'invalid': category.invalid && taskForm.submitted }" >
+           <option value="" disabled selected>Select Task Category</option>
+          <option value="Design">Design</option>
+          <option value="Development">Development</option>
+          <option value="Testing">Testing</option>
+        </select>
+        <div class="error" *ngIf="category.invalid && taskForm.submitted">Task Category is required.</div> -->
 
-      <!-- Description -->
-      <!-- <label>Description</label>
-      <textarea rows="2" [(ngModel)]="newTask.description" placeholder="Enter description"></textarea> -->
+        <label>Task Category <span class="red-star">*</span></label>
 
-      <!-- Status Dropdown -->
-      <!-- <label>Status *</label>
-      <select [(ngModel)]="newTask.status">
-        <option value="" disabled selected>Select Status</option>
-        <option>Not Started</option>
-        <option>In Progress</option>
-        <option>Completed</option>
-      </select> -->
-
-      <!-- Billability Dropdown -->
-      <!-- <label>Billability *</label>
-      <select [(ngModel)]="newTask.billable">
-        <option value="" disabled selected>Select Billability</option>
-        <option value="true">Billable</option>
-        <option value="false">Non-Billable</option>
-      </select> -->
-
-      <!-- Comment -->
-      <!-- <label>Comment</label>
-      <textarea rows="2" [(ngModel)]="newTask.comment" placeholder="Add comment (if any)"></textarea>
-    </div> -->
-
-    <!-- <div class="modal-footer">
-      <button class="btn-cancel" (click)="close()">Cancel</button>
-      <button class="btn-save" (click)="saveTask()">Save</button>
-    </div>
-  </div>
-</div> --> 
+        <label>Task Category <span class="red-star">*</span></label>
+<p-dropdown
+  name="category"
+  [(ngModel)]="newTask.category"
+  [options]="taskCategories"
+  placeholder="Select Task Category"
+  required
+  #category="ngModel"
+  [ngClass]="{ 'invalid': category.invalid && taskForm.submitted }"
+></p-dropdown>
+<div class="error" *ngIf="category.invalid && taskForm.submitted">Task Category is required.</div>
 
 
-<div class="modal-backdrop" *ngIf="taskService.show">
-  <div class="modal-panel-right"> <!-- Slide-in panel -->
-    <div class="modal-header">
-      <h2>New Task</h2>
-      <button class="close-btn" (click)="close()">×</button>
-    </div>
+        <!-- Billability -->
+        <!-- <label>Billability <span class="red-star">*</span></label>
+        <select name="billable" [(ngModel)]="newTask.billable" required #billable="ngModel"
+          [ngClass]="{ 'invalid': billable.invalid && taskForm.submitted }" placeholder="Select Billability">
+          <option value="true">Billable</option>
+          <option value="false">Non-Billable</option>
+        </select>
+        <div class="error" *ngIf="billable.invalid && taskForm.submitted">Billability is required.</div> -->
 
-    <div class="modal-body">
-      <label>Project Name *</label>
-      <input type="text" [value]="projectName" disabled />
+        <!-- Task Status -->
+        <label>Task Status <span class="red-star">*</span></label>
+        <select name="status" [(ngModel)]="newTask.status" required #status="ngModel"
+          [ngClass]="{ 'invalid': status.invalid && taskForm.submitted }" placeholder="Select Status">
+          <option value="Not Started">Not Started</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+        <div class="error" *ngIf="status.invalid && taskForm.submitted">Task Status is required.</div>
 
-      <label>Task Name *</label>
-      <input type="text" [(ngModel)]="newTask.name" placeholder="Enter task name" />
 
-      <label>Task Category</label>
-      <select [(ngModel)]="newTask.category">
-        <option value="">Select Task Category</option>
-        <option>Design</option>
-        <option>Development</option>
-        <option>Testing</option>
-      </select>
+        <!-- Description -->
+        <label>Description</label>
+        <textarea name="description" rows="2" [(ngModel)]="newTask.description"
+          placeholder="Add Task Description"></textarea>
 
-      <label>Billability (Jun 20) *</label>
-      <select [(ngModel)]="newTask.billable">
-        <option value="true">Billable</option>
-        <option value="false">Non-Billable</option>
-      </select>
+        <!-- Comment -->
+        <label>Comment</label>
+        <textarea name="comment" rows="2" [(ngModel)]="newTask.comment" placeholder="Add comment (if any)"></textarea>
+      </div>
 
-      <label>Task Status *</label>
-      <select [(ngModel)]="newTask.status">
-        <option value="">Select Status</option>
-        <option>Not Started</option>
-        <option>In Progress</option>
-        <option>Completed</option>
-      </select>
-
-      <label>Description (Jun 20) *</label>
-      <textarea rows="2" [(ngModel)]="newTask.description" placeholder="Add Task Description"></textarea>
-
-      <label>Comment</label>
-      <textarea rows="2" [(ngModel)]="newTask.comment" placeholder="Add comment (if any)"></textarea>
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn-cancel" (click)="close()">Cancel</button>
-      <button class="btn-save" (click)="saveTask()">Save</button>
+      <div class="modal-footer">
+        <button class="btn-cancel" type="button" (click)="close()">Cancel</button>
+        <button class="btn-save" type="submit">Save</button>
+      </div>
     </div>
   </div>
-</div>
+</form>

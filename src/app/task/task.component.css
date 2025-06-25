@@ -11,7 +11,7 @@
 }
 
 .modal-panel-right {
-  width: 400px;
+  width: 450px;
   background: #fff;
   height: 100%;
   padding: 20px;
@@ -49,7 +49,7 @@
 }
 
 .modal-body {
-  margin-top: 20px;
+  margin-top: 15px;
   display: flex;
   flex-direction: column;
 }
@@ -58,6 +58,65 @@
   margin-top: 10px;
   font-weight: 500;
 }
+
+.red-star{
+  color:red
+}
+
+/* Style dropdown box */
+.p-dropdown {
+  width: 100%;
+  height: 38px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #fff;
+  transition: border-color 0.2s ease;
+}
+
+/* Placeholder label */
+.p-dropdown .p-dropdown-label.p-placeholder {
+  color: #999;
+  padding-left: 10px;
+}
+
+/* On focus */
+.p-dropdown.p-focus {
+  border-color: #2684ff;
+  box-shadow: 0 0 0 2px rgba(38, 132, 255, 0.1);
+}
+
+/* Red border for validation */
+.p-dropdown.invalid {
+  border: 1px solid red !important;
+  box-shadow: 0 0 3px red;
+}
+
+/* Error message */
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+/* .invalid {
+  border: 1px solid red !important;
+  box-shadow: 0 0 3px red;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 8px;
+} */
+
+
+
+/* .error {
+  color: red;
+  font-size: 13px;
+  margin-top: 4px;
+} */
+
 
 .modal-body input,
 .modal-body select,
@@ -68,7 +127,10 @@
   border-radius: 6px;
   font-size: 14px;
   width: 100%;
+  box-sizing: border-box;
 }
+
+
 
 .modal-footer {
   display: flex;

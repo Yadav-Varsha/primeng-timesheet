@@ -32,8 +32,26 @@
   background-color: white;
   margin-top: 4px;
  
-  /* border-bottom: 2px solid #e0e0e0; */
+ 
 }
+ 
+
+ .isMonthViewSelected{
+   background-color: #f5e6ed !important;
+      color: #9e0d51;
+}
+
+/* .text-color{
+    color: #9e0d51;
+} */
+
+.border-light-dark {
+    border-color: #d1d3e0 !important;
+}
+.font-weight-bolder {
+    font-weight: 600 !important;
+}
+
  
 .view-tabs {
 display: flex;
@@ -110,6 +128,7 @@ color: #0d6efd;
 .submit-btn {
   padding: 6px 16px;
   background-color: #0d6efd;
+
   color: white;
   border: none;
   border-radius: 4px;
@@ -119,6 +138,7 @@ color: #0d6efd;
   display: flex;
   align-items: center;
   gap: 8px;
+ 
 }
  
 .project-btn {
@@ -144,9 +164,7 @@ color: #0d6efd;
   border-radius: 4px;
   cursor: pointer;
 }
-/* td {
-  border: 1px solid red;
-} */
+
 .project-name{
   font-weight: bold;
   font-size: 16px;
@@ -186,10 +204,10 @@ color: #0d6efd;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 .billable-pill.billable {
-  background: #198754; /* Bootstrap green */
+  background: #198754; 
 }
 .billable-pill.non-billable {
-  background: #6c757d; /* Bootstrap gray */
+  background: #6c757d; 
 }
 
 .date-navigation-bar {
@@ -221,19 +239,11 @@ color: #0d6efd;
 
 
 
-/* ====== TABLE STYLING FOR TIMESHEET ====== */
-/* .timesheet-table{
-margin-top: 16px;
- font-family: 'Arial', sans-serif;
-  color: #333;
-} */
 
-
-/* =================== BASE STRUCTURE =================== */
-/* =================== BASE STRUCTURE =================== */
+/* BASE STRUCTURE  */
 
 .timesheet-table-wrapper {
-  margin-top: 20px; /* adjust as needed */
+  margin-top: 20px; 
 }
 
 :host ::ng-deep .p-datatable {
@@ -244,7 +254,7 @@ margin-top: 16px;
   font-size: 15px;
 }
 
-/* =================== HEADER =================== */
+/*  HEADER */
 :host ::ng-deep .p-datatable thead tr {
     background-color: #f9f9f9 !important;
 
@@ -271,7 +281,7 @@ margin-top: 16px;
   padding-left: 16px;
 }
 
-/* =================== TODAY HEADER HIGHLIGHT =================== */
+/* TODAY HEADER HIGHLIGHT */
 ::ng-deep th.today-highlight {
   background-color: #F8F8F8 !important;
   border-left: 1px solid #009cde !important;
@@ -281,8 +291,8 @@ margin-top: 16px;
   border-radius: 0 !important;
 }
 
-/* =================== ROW STYLING =================== */
-/* Project/task rows: only bottom border */
+/* ROW STYLING */
+
 :host ::ng-deep .p-datatable-tbody > tr > td {
   padding: 12px;
   border: none;
@@ -305,7 +315,7 @@ margin-top: 16px;
   background-color: #F5FBFD !important;
 }
 
-/* =================== TOTAL FOOTER ROW =================== */
+/*TOTAL FOOTER ROW  */
 :host ::ng-deep .p-rowgroup-footer,
 :host ::ng-deep tr.p-rowgroup-footer {
   background-color: #f4fbff !important;
@@ -328,7 +338,7 @@ margin-top: 16px;
   padding-right: 16px;
 }
 
-/* =================== INPUT STYLING =================== */
+/*  INPUT STYLING  */
 :host ::ng-deep input[type="number"] {
   width: 60px;
   padding: 6px;
@@ -345,7 +355,7 @@ margin-top: 16px;
   margin: 0;
 }
 
-/* =================== "+ Task" Link =================== */
+/*+ Task"  */
 :host ::ng-deep a {
   color: #0d6efd;
   font-weight: 500;
@@ -355,37 +365,5 @@ margin-top: 16px;
   text-decoration: underline;
 }
 
-/* background-color: #F5FCFF !important;
-}
-.text-primary {
-    color: #3699ff !important;
-} */
 
-/* total
-/* .font-weight-boldest {
-    font-weight: 700;
-} */
-/* task */
-/* .font-weight-bold{
-  font-weight: 500 !important;
 
-} */
- /* button-group */
- .isMonthViewSelected[_ngcontent-ogq-c725] {
-    background-color: #f5e6ed !important;
-}
-.text-color[_ngcontent-ogq-c725] {
-    color: #9e0d51;
-}
-
-style {
-    border-top-right-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-}
-
-.border-light-dark {
-    border-color: #d1d3e0 !important;
-}
-.font-weight-bolder {
-    font-weight: 600 !important;
-}

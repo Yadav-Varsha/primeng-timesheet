@@ -11,7 +11,7 @@
 }
 
 .modal-panel {
-  width: 480px;
+  width: 500px;
   height: 100%;
   background: #fff;
   padding: 24px;
@@ -34,9 +34,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 600;
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
 }
 
 .close-btn {
@@ -45,12 +45,16 @@
   border: none;
   cursor: pointer;
 }
-
+.error{
+  color:red ;
+ font-size: 14px;
+}
 .modal-body label {
-  font-weight: 500;
-  margin-top: 14px;
+  font-weight: 450;
+  margin-top: 10px;
   display: block;
 }
+.red-star { color: #dc2626; }
 
 .modal-body input,
 .modal-body select,
@@ -64,6 +68,12 @@
   box-sizing: border-box;
 }
 
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border: 1px solid red;
+  box-shadow: 0 0 3px red;
+}
 .modal-footer {
   display: flex;
   justify-content: flex-end;

@@ -1,40 +1,58 @@
-<div class="modal-backdrop" *ngIf="projectModalService.show">
-  <div class="modal-panel">
-    <div class="modal-header">
-      <h2>New Project</h2>
-      <button class="close-btn" (click)="close()">×</button>
-    </div>
+<form #projectForm="ngForm" (ngSubmit)="saveProject()" *ngIf="projectModalService.show">
+  <div class="modal-backdrop">
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2>New Project</h2>
+        <button class="close-btn" type="button" (click)="close()">×</button>
 
-    <div class="modal-body">
-      <label>Project Name *</label>
-      <input type="text" [(ngModel)]="newProject.name" placeholder="Enter project name" />
+      </div>
 
-      <label>Client Name *</label>
-      <input type="text" [(ngModel)]="newProject.client" placeholder="Enter client name" />
+      <div class="modal-body">
+        <!-- Project Name -->
+        <label>Project Name <span class="red-star">*</span></label>
+        <input type="text" name="name" [(ngModel)]="newProject.name" required #name="ngModel" placeholder="Enter project name" />
+        <div class="error" *ngIf="name.invalid && name.touched">Project Name is required.</div>
 
-      <label>Project Type *</label>
-      <select [(ngModel)]="newProject.type">
-        <option value="" disabled selected>Select Project Type</option>
-        <option>Internal</option>
-        <option>External</option>
-      </select>
+        <!-- Client Name -->
+        <label>Client Name <span class="red-star">*</span></label>
+        <input type="text" name="client" [(ngModel)]="newProject.client" required #client="ngModel" placeholder="Enter client name" />
+        <div class="error" *ngIf="client.invalid && client.touched">Client Name is required.</div>
 
-      <label>Start Date</label>
-      <input type="date" [(ngModel)]="newProject.startDate" />
+        <!-- Project Type -->
+        <label>Project Type <span class="red-star">*</span></label>
+        <select name="type" [(ngModel)]="newProject.type" required #type="ngModel">
+          <option value="" disabled selected>Select Project Type</option>
+          <option>Internal</option>
+          <option>External</option>
+        </select>
+        <div class="error" *ngIf="type.invalid && type.touched">Project Type is required.</div>
 
-      <label>End Date</label>
-      <input type="date" [(ngModel)]="newProject.endDate" />
+        <!-- Start Date -->
+        <label>Start Date <span class="red-star">*</span></label>
+        <input type="date" name="startDate" [(ngModel)]="newProject.startDate" required #startDate="ngModel" />
+        <div class="error" *ngIf="startDate.invalid && startDate.touched">Start Date is required.</div>
 
-      <label>Description</label>
-      <textarea rows="3" [(ngModel)]="newProject.description" placeholder="Add project description"></textarea>
+        <!-- End Date -->
+        <label>End Date <span class="red-star">*</span></label>
+        <input type="date" name="endDate" [(ngModel)]="newProject.endDate" required #endDate="ngModel" />
+        <div class="error" *ngIf="endDate.invalid && endDate.touched">End Date is required.</div>
 
-      <label>Comment</label>
-      <textarea rows="2" [(ngModel)]="newProject.comment" placeholder="Add comment (if any)"></textarea>
-    </div>
+        <!-- Description -->
+        <label>Description</label>
+        <textarea rows="3" name="description" [(ngModel)]="newProject.description" placeholder="Add project description"></textarea>
 
-    <div class="modal-footer">
-      <button class="btn-cancel" (click)="close()">Cancel</button>
-      <button class="btn-save" (click)="saveProject()">Save</button>
+        <!-- Comment -->
+        <label>Comment</label>
+        <textarea rows="2" name="comment" [(ngModel)]="newProject.comment" placeholder="Add comment (if any)"></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" type="button" (click)="close()">Cancel</button>
+        <button class="btn-save" [disabled]="projectForm.invalid" type="submit">
+  Save
+</button>
+      </div>
     </div>
   </div>
-</div>
+</form>
+
