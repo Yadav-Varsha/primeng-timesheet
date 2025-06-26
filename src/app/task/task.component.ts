@@ -17,6 +17,7 @@ import { NgClass } from '@angular/common';
 export class TaskComponent {
   newTask: any = {
     name: '',
+    category: '',
     description: '',
     status: '',
     billable: '',
@@ -73,10 +74,6 @@ saveTask() {
     this.taskService.saveTaskHours(projectId, tasks, this.currentWeekStart);
   }
 
-  taskCategories = [
-  { label: 'Design', value: 'Design' },
-  { label: 'Development', value: 'Development' },
-  { label: 'Testing', value: 'Testing' }
-];
+ 
 
 }

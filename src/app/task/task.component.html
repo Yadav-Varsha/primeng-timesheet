@@ -1,4 +1,4 @@
-<form #form="ngForm" (ngSubmit)="saveTask()" *ngIf="taskService.show">
+<form #taskForm="ngForm" (ngSubmit)="saveTask()" *ngIf="taskService.show">
   <div class="modal-backdrop">
     <div class="modal-panel-right">
       <div class="modal-header">
@@ -14,7 +14,8 @@
         <input type="text" name="name" [(ngModel)]="newTask.name" required #name="ngModel"
           [ngClass]="{ 'invalid': name.invalid && taskForm.submitted }" placeholder="Enter task name" />
         <div class="error" *ngIf="name.invalid && taskForm.submitted">Task Name is required.</div>
-<!-- task category -->
+
+        <!-- task category -->
         <!-- <label>Task Category <span class="red-star">*</span></label>
         <select name="category" [(ngModel)]="newTask.category" required #category="ngModel"
           [ngClass]="{ 'invalid': category.invalid && taskForm.submitted }" >
@@ -25,22 +26,29 @@
         </select>
         <div class="error" *ngIf="category.invalid && taskForm.submitted">Task Category is required.</div> -->
 
-        <label>Task Category <span class="red-star">*</span></label>
-
-        <label>Task Category <span class="red-star">*</span></label>
-<p-dropdown
+  <label>Task Category <span class="red-star">*</span></label>
+<select
   name="category"
   [(ngModel)]="newTask.category"
-  [options]="taskCategories"
-  placeholder="Select Task Category"
   required
   #category="ngModel"
   [ngClass]="{ 'invalid': category.invalid && taskForm.submitted }"
-></p-dropdown>
-<div class="error" *ngIf="category.invalid && taskForm.submitted">Task Category is required.</div>
+  class="custom-select"
+>
+  <!-- Default option behaves like placeholder -->
+  <option value="" disabled class="placeholder-option">
+    Select Task Category
+  </option>
+  <option value="Design">Design</option>
+  <option value="Development">Development</option>
+  <option value="Testing">Testing</option>
+</select>
 
+<div class="error" *ngIf="category.invalid && taskForm.submitted">
+  Task Category is required.
+</div>
 
-        <!-- Billability -->
+<!-- Billability -->
         <!-- <label>Billability <span class="red-star">*</span></label>
         <select name="billable" [(ngModel)]="newTask.billable" required #billable="ngModel"
           [ngClass]="{ 'invalid': billable.invalid && taskForm.submitted }" placeholder="Select Billability">
@@ -49,15 +57,52 @@
         </select>
         <div class="error" *ngIf="billable.invalid && taskForm.submitted">Billability is required.</div> -->
 
+        <label>Billability <span class="red-star">*</span></label>
+<select
+  name="billable"
+  [(ngModel)]="newTask.billable"
+  required
+  #billable="ngModel"
+  [ngClass]="{ 'invalid': billable.invalid && taskForm.submitted }"
+  class="custom-select"
+>
+  <option value="" disabled class="placeholder-option">Select Billability</option>
+  <option value="true">Billable</option>
+  <option value="false">Non-Billable</option>
+</select>
+<div class="error" *ngIf="billable.invalid && taskForm.submitted">
+  Billability is required.
+</div>
+
+
         <!-- Task Status -->
-        <label>Task Status <span class="red-star">*</span></label>
+        <!-- <label>Task Status <span class="red-star">*</span></label>
         <select name="status" [(ngModel)]="newTask.status" required #status="ngModel"
           [ngClass]="{ 'invalid': status.invalid && taskForm.submitted }" placeholder="Select Status">
           <option value="Not Started">Not Started</option>
           <option value="In Progress">In Progress</option>
           <option value="Completed">Completed</option>
         </select>
-        <div class="error" *ngIf="status.invalid && taskForm.submitted">Task Status is required.</div>
+        <div class="error" *ngIf="status.invalid && taskForm.submitted">Task Status is required.</div> -->
+
+        <label>Task Status <span class="red-star">*</span></label>
+<select
+  name="status"
+  [(ngModel)]="newTask.status"
+  required
+  #status="ngModel"
+  [ngClass]="{ 'invalid': status.invalid && taskForm.submitted }"
+  class="custom-select"
+>
+  <option value="" disabled class="placeholder-option">Select Task Status</option>
+  <option>Not Started</option>
+  <option>In Progress</option>
+  <option>Completed</option>
+</select>
+<div class="error" *ngIf="status.invalid && taskForm.submitted">
+  Task Status is required.
+</div>
+
 
 
         <!-- Description -->

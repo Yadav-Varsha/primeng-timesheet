@@ -45,16 +45,52 @@
   border: none;
   cursor: pointer;
 }
-.error{
+/* .error{
   color:red ;
  font-size: 14px;
-}
+} */
 .modal-body label {
   font-weight: 450;
   margin-top: 10px;
   display: block;
 }
-.red-star { color: #dc2626; }
+.red-star {
+  color: red;
+}
+
+/* Red border for validation */
+input.invalid,
+select.invalid,
+textarea.invalid {
+  border: 1px solid red;
+  border-radius: 4px;
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+
+/* Error message */
+.error {
+  color: red;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+/* Placeholder for select */
+.custom-select option.placeholder-option {
+  color: #999;
+}
+
+/* Hide placeholder on open */
+.custom-select:focus option.placeholder-option {
+  display: none;
+}
+
+
 
 .modal-body input,
 .modal-body select,
@@ -68,12 +104,7 @@
   box-sizing: border-box;
 }
 
-input.ng-invalid.ng-touched,
-select.ng-invalid.ng-touched,
-textarea.ng-invalid.ng-touched {
-  border: 1px solid red;
-  box-shadow: 0 0 3px red;
-}
+
 .modal-footer {
   display: flex;
   justify-content: flex-end;

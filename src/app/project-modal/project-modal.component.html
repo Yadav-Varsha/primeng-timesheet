@@ -1,4 +1,4 @@
-<form #projectForm="ngForm" (ngSubmit)="saveProject()" *ngIf="projectModalService.show">
+<!-- <form #projectForm="ngForm" (ngSubmit)="saveProject()" *ngIf="projectModalService.show">
   <div class="modal-backdrop">
     <div class="modal-panel">
       <div class="modal-header">
@@ -8,17 +8,17 @@
       </div>
 
       <div class="modal-body">
-        <!-- Project Name -->
+        
         <label>Project Name <span class="red-star">*</span></label>
         <input type="text" name="name" [(ngModel)]="newProject.name" required #name="ngModel" placeholder="Enter project name" />
         <div class="error" *ngIf="name.invalid && name.touched">Project Name is required.</div>
 
-        <!-- Client Name -->
+     
         <label>Client Name <span class="red-star">*</span></label>
         <input type="text" name="client" [(ngModel)]="newProject.client" required #client="ngModel" placeholder="Enter client name" />
         <div class="error" *ngIf="client.invalid && client.touched">Client Name is required.</div>
 
-        <!-- Project Type -->
+        
         <label>Project Type <span class="red-star">*</span></label>
         <select name="type" [(ngModel)]="newProject.type" required #type="ngModel">
           <option value="" disabled selected>Select Project Type</option>
@@ -27,21 +27,21 @@
         </select>
         <div class="error" *ngIf="type.invalid && type.touched">Project Type is required.</div>
 
-        <!-- Start Date -->
+      
         <label>Start Date <span class="red-star">*</span></label>
         <input type="date" name="startDate" [(ngModel)]="newProject.startDate" required #startDate="ngModel" />
         <div class="error" *ngIf="startDate.invalid && startDate.touched">Start Date is required.</div>
 
-        <!-- End Date -->
+       
         <label>End Date <span class="red-star">*</span></label>
         <input type="date" name="endDate" [(ngModel)]="newProject.endDate" required #endDate="ngModel" />
         <div class="error" *ngIf="endDate.invalid && endDate.touched">End Date is required.</div>
 
-        <!-- Description -->
+        
         <label>Description</label>
         <textarea rows="3" name="description" [(ngModel)]="newProject.description" placeholder="Add project description"></textarea>
 
-        <!-- Comment -->
+       
         <label>Comment</label>
         <textarea rows="2" name="comment" [(ngModel)]="newProject.comment" placeholder="Add comment (if any)"></textarea>
       </div>
@@ -51,6 +51,110 @@
         <button class="btn-save" [disabled]="projectForm.invalid" type="submit">
   Save
 </button>
+      </div>
+    </div>
+  </div>
+</form>
+ -->
+
+ <form #projectForm="ngForm" (ngSubmit)="saveProject()" *ngIf="projectModalService.show">
+
+  <div class="modal-backdrop">
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2>New Project</h2>
+        <button class="close-btn" type="button" (click)="close()">×</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Project Name -->
+        <label>Project Name <span class="red-star">*</span></label>
+        <input
+          type="text"
+          name="name"
+          [(ngModel)]="newProject.name"
+          required
+          #name="ngModel"
+          placeholder="Enter project name"
+          [ngClass]="{ 'invalid': name.invalid && projectForm.submitted }"
+        />
+        <div class="error" *ngIf="name.invalid && projectForm.submitted">Project Name is required.</div>
+
+        <!-- Client Name -->
+        <label>Client Name <span class="red-star">*</span></label>
+        <input
+          type="text"
+          name="client"
+          [(ngModel)]="newProject.client"
+          required
+          #client="ngModel"
+          placeholder="Enter client name"
+          [ngClass]="{ 'invalid': client.invalid && projectForm.submitted }"
+        />
+        <div class="error" *ngIf="client.invalid && projectForm.submitted">Client Name is required.</div>
+
+        <!-- Project Type -->
+        <label>Project Type <span class="red-star">*</span></label>
+        <select
+          name="type"
+          [(ngModel)]="newProject.type"
+          required
+          #type="ngModel"
+          [ngClass]="{ 'invalid': type.invalid && projectForm.submitted }"
+          class="custom-select"
+        >
+          <option value="" disabled class="placeholder-option">Select Project Type</option>
+          <option value="Internal">Internal</option>
+          <option value="External">External</option>
+        </select>
+        <div class="error" *ngIf="type.invalid && projectForm.submitted">Project Type is required.</div>
+
+        <!-- Start Date -->
+        <label>Start Date <span class="red-star">*</span></label>
+        <input
+          type="date"
+          name="startDate"
+          [(ngModel)]="newProject.startDate"
+          required
+          #startDate="ngModel"
+          [ngClass]="{ 'invalid': startDate.invalid && projectForm.submitted }"
+        />
+        <div class="error" *ngIf="startDate.invalid && projectForm.submitted">Start Date is required.</div>
+
+        <!-- End Date -->
+        <label>End Date <span class="red-star">*</span></label>
+        <input
+          type="date"
+          name="endDate"
+          [(ngModel)]="newProject.endDate"
+          required
+          #endDate="ngModel"
+          [ngClass]="{ 'invalid': endDate.invalid && projectForm.submitted }"
+        />
+        <div class="error" *ngIf="endDate.invalid && projectForm.submitted">End Date is required.</div>
+
+        <!-- Description -->
+        <label>Description</label>
+        <textarea
+          rows="3"
+          name="description"
+          [(ngModel)]="newProject.description"
+          placeholder="Add project description"
+        ></textarea>
+
+        <!-- Comment -->
+        <label>Comment</label>
+        <textarea
+          rows="2"
+          name="comment"
+          [(ngModel)]="newProject.comment"
+          placeholder="Add comment (if any)"
+        ></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" type="button" (click)="close()">Cancel</button>
+        <button class="btn-save" type="submit">Save</button>
       </div>
     </div>
   </div>
