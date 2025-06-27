@@ -142,7 +142,11 @@
       <span class="hour-label">Submitted Hours</span>
     </div>
     <div class="action-buttons">
-      <p-button class="project-btn" icon="pi pi-plus" label="Project" (click)="openModal()" />
+      <button class="project-btn" (click)="openModal()">
+  <i class="pi pi-plus custom-icon"></i>
+  <span class="custom-label">Project</span>
+</button>
+
       <p-button class="submit-btn" [raised]="true" severity="info">Submit  <span class="breadcrumb-separator" style="margin-left: 6px;">|</span> <i class="pi pi-chevron-down" style="margin-left: 6px;"></i></p-button>
      
     </div>
@@ -207,7 +211,7 @@
   <ng-template #expandedrow let-project>
     <ng-container *ngFor="let task of project.tasks">
       <tr>
-        <td>{{ task.name }}</td>
+        <td class="task-name">{{ task.name }}</td>
         <td>{{ task.description }}</td>
         <td>
           <span class="billable-pill" [ngClass]="task.billable ? 'billable' : 'non-billable'"
