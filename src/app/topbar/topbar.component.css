@@ -1,43 +1,4 @@
-/* .topbar {
-  width: 100%;
-  height: 56px;
-  background: #f8f9fa;
-  color:  #333;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-.app-title {
-  font-size: 1.3rem;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-}
-.app-title i {
-  margin-right: 0.7rem;
-}
-.user-info {
-  display: flex;
-  align-items: center;
-  font-size: 1.1rem;
-}
-.user-info i {
-  margin-right: 0.5rem;
-} */
-/* 
-.topbar {
-  width: 100%;
-  background:  #f8f9fa;
-  color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  padding: 0.7rem 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-} */
+
 .topbar {
   position: fixed;
   top: 0;
@@ -53,22 +14,7 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   padding: 0;
 }
-/* .topbar-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-}
-.app-title {
-  font-size: 1.3rem;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.3rem;
-}
-.app-title i {
-  margin-right: 0.7rem;
-} */
+
 .breadcrumb {
   display: flex;
   align-items: center;
@@ -79,15 +25,6 @@
 .breadcrumb i {
   margin: 0 0.5rem;
 }
-/* .topbar-right {
-  position: absolute;
-  right: 2rem;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  font-size: 1.1rem;
-} */
 
 .topbar-right {
   display: flex;
@@ -107,4 +44,91 @@
   margin: 0 0.5rem;
   color: black;
   font-weight: bold;
+}
+
+/* --- BASE STYLES --- */
+
+.topbar-toggle-btn {
+  display: none;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+}
+.topbar-toggle-btn .dots {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #333;
+  border-radius: 50%;
+  box-shadow: 0 8px 0 #333, 0 16px 0 #333;
+  margin-top: 2px;
+}
+
+/* --- DESKTOP: Always show user info and breadcrumb, hide toggle/dropdown --- */
+@media (min-width: 901px) {
+  .topbar-toggle-btn,
+  .topbar-dropdown {
+    display: none !important;
+  }
+  .breadcrumb,
+  .topbar-right {
+    display: flex !important;
+  }
+}
+
+/* --- MOBILE/TABLET: Hide user info from topbar, show only in dropdown --- */
+@media (max-width: 900px) {
+  .topbar {
+    left: 0;
+    width: 100%;
+    padding: 0 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+  }
+  .breadcrumb {
+    display: none !important;
+  }
+  .topbar-right {
+    display: none !important;
+  }
+  .topbar-toggle-btn {
+    display: flex !important;
+    position: static;
+    margin-right: 0;
+    margin-left: auto;
+    z-index: 102;
+  }
+  .topbar-dropdown {
+    display: block !important;
+    position: absolute;
+    top: 56px; /* height of topbar */
+    right: 12px;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    border-radius: 8px;
+    padding: 12px 20px;
+    min-width: 160px;
+    z-index: 999;
+    animation: fadeIn 0.2s;
+  }
+  .topbar-dropdown .topbar-right.show-on-mobile {
+    display: flex !important;
+    align-items: center;
+    font-size: 1.1rem;
+    margin: 0;
+  }
+}
+
+/* Animation for dropdown */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px);}
+  to   { opacity: 1; transform: translateY(0);}
 }

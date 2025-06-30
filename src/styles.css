@@ -31,4 +31,12 @@ body, html {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
   min-height: calc(100vh - 66px);
+   transition: margin-left 0.3s;
+}
+
+@media (max-width: 900px) {
+  .main-content {
+    margin-left: 0 !important;
+    margin-top: 12px !important; /* Yahan value adjust karen */
+  }
 }

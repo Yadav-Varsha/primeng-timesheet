@@ -16,4 +16,10 @@ menu = [
   { label: 'Timesheet', icon: 'pi pi-calendar-clock', path: '/timesheet' }
 ];
 
+ sidebarOpen = true;
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
 }

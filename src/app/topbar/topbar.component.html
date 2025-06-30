@@ -1,5 +1,5 @@
 
-<div class="topbar">
+<!-- <div class="topbar">
   <div class="breadcrumb">
     <span>Timesheet</span>
       <span class="breadcrumb-separator">|</span>
@@ -8,5 +8,57 @@
   <div class="topbar-right">
     <i class="pi pi-user"></i>
     <span class="username">Varsha Yadav</span>
+  </div>
+</div> -->
+
+
+<!-- 
+<div class="topbar"> -->
+  <!-- Breadcrumb/left content -->
+  <!-- <div class="breadcrumb" [class.hide-on-mobile]="showTopbarMenu">
+    <span>Timesheet</span>
+    <span class="breadcrumb-separator">|</span>
+    <span>My Timesheet-Week</span>
+  </div> -->
+
+  <!-- Right content (user info) -->
+  <!-- <div class="topbar-right" [class.show-on-mobile]="showTopbarMenu">
+    <i class="pi pi-user"></i>
+    <span class="username">Varsha Yadav</span>
+  </div> -->
+
+  <!-- Three-dot toggle button (at right) -->
+  <!-- <button class="topbar-toggle-btn" (click)="toggleTopbarMenu()" aria-label="Toggle menu">
+    <span class="dots"></span>
+  </button>
+</div> -->
+<div class="topbar">
+  <div class="breadcrumb" [class.hide-on-mobile]="showTopbarMenu">
+    <span>Timesheet</span>
+    <span class="breadcrumb-separator">|</span>
+    <span>My Timesheet-Week</span>
+  </div>
+
+  <!-- User info: Always present in DOM, CSS se control hoga -->
+  <div class="topbar-right">
+    <i class="pi pi-user"></i>
+    <span class="username">Varsha Yadav</span>
+  </div>
+
+  <!-- Toggle button for mobile/tablet -->
+  <button class="topbar-toggle-btn" (click)="toggleTopbarMenu($event)" aria-label="Toggle menu">
+    <span class="dots"></span>
+  </button>
+
+  <!-- Dropdown for user info on mobile/tablet -->
+  <div 
+    class="topbar-dropdown" 
+    *ngIf="showTopbarMenu"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="topbar-right show-on-mobile">
+      <i class="pi pi-user"></i>
+      <span class="username">Varsha Yadav</span>
+    </div>
   </div>
 </div>

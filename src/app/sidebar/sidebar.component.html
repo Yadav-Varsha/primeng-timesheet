@@ -1,7 +1,28 @@
-<div class="custom-sidebar">
+<!-- <div class="custom-sidebar">
   <div class="sidebar-header">
     <img src="assets/timesheet-logo.svg" alt="Logo" class="sidebar-logo" />
-    <!-- <span class="sidebar-title">MyApp</span> -->
+   
+  </div>
+  <nav class="sidebar-menu">
+    <ul>
+      <li *ngFor="let item of menu">
+        <a [routerLink]="item.path" routerLinkActive="active">
+          <i [class]="item.icon"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div> -->
+
+
+
+<button class="sidebar-toggle-btn" (click)="toggleSidebar()" aria-label="Toggle sidebar">
+  <span class="hamburger"></span>
+</button>
+<div class="custom-sidebar" [class.closed]="!sidebarOpen">
+  <div class="sidebar-header">
+    <img src="assets/timesheet-logo.svg" alt="Logo" class="sidebar-logo" />
   </div>
   <nav class="sidebar-menu">
     <ul>

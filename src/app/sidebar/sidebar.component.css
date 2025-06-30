@@ -77,3 +77,77 @@ nav i {
   /* margin-top: 70px;   /* Topbar height */
   /* padding: 2rem;
 }  */
+
+/* Hamburger toggle button - hidden by default */
+.sidebar-toggle-btn {
+  display: none;
+  position: fixed;
+  top: 22px;
+  left: 18px;
+  z-index: 200;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  height: 36px;
+  width: 36px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hamburger icon styling */
+.sidebar-toggle-btn .hamburger {
+  display: block;
+  width: 28px;
+  height: 3px;
+  background: #444;
+  border-radius: 2px;
+  position: relative;
+}
+.sidebar-toggle-btn .hamburger::before,
+.sidebar-toggle-btn .hamburger::after {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 3px;
+  background: #444;
+  border-radius: 2px;
+  position: absolute;
+  left: 0;
+  transition: 0.2s;
+}
+.sidebar-toggle-btn .hamburger::before {
+  top: -9px;
+}
+.sidebar-toggle-btn .hamburger::after {
+  top: 9px;
+}
+
+/* Show toggle button and hide sidebar on small screens */
+@media (max-width: 900px) {
+  .sidebar-toggle-btn {
+    display: flex;
+  }
+  .custom-sidebar {
+    left: -240px;
+    transition: left 0.3s;
+  }
+  .custom-sidebar.closed {
+    left: -240px;
+  }
+  .custom-sidebar:not(.closed) {
+    left: 0;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.10);
+  }
+}
+
+/* Always show sidebar on desktop */
+@media (min-width: 901px) {
+  .sidebar-toggle-btn {
+    display: none;
+  }
+  .custom-sidebar {
+    left: 0;
+  }
+}
